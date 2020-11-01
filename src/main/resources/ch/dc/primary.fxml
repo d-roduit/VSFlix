@@ -18,7 +18,7 @@
                <TextField fx:id="portNumberTextField"/>
             </VBox>
       </HBox>
-      <Button text="Join" onAction="#connectToServer">
+      <Button text="Join" onAction="#switchToSecondary">
          <padding>
             <Insets top="5" right="20" bottom="5" left="20" />
          </padding>

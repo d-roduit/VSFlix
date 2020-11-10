@@ -50,9 +50,10 @@ public class SecondaryController {
 
         // Files possible :
             // https://droduit.ch/vsflix/lacalin.mp4
-            // https://droduit.ch/vsflix/cassius.mp3
+//             https://droduit.ch/vsflix/cassius.mp3
             // https://droduit.ch/vsflix/audio.wav
         String path = "https://droduit.ch/vsflix/lacalin.mp4";
+//        String path = "http://178.194.94.142:45001/lacalin.mp4";
         //Instantiating Media class
 //        Media media = new Media(new File(path).toURI().toString());
         media = new Media(path);
@@ -70,10 +71,10 @@ public class SecondaryController {
                 mediaDuration.setText("Duration: " + media.getDuration().toSeconds() + " seconds");
 
                 // Display media's metadata in console
+
                 for (Map.Entry<String, Object> entry : media.getMetadata().entrySet()){
                     System.out.println(entry.getKey() + ": " + entry.getValue());
                 }
-
             }
         });
 

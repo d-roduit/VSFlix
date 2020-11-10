@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.dc.PrimaryController">
+      <HBox>
+            <VBox>
+               <Label text="IP address" onMouseClicked="#focusIpAddressTextField"/>
+               <TextField fx:id="ipAddressTextField" text="127.0.0.1"/>
+            </VBox>
+            <VBox>
+               <Label text="Port Number" />
+               <TextField fx:id="portNumberTextField"/>
+            </VBox>
+      </HBox>
+      <Button text="Join" onAction="#switchToSecondary">
+         <padding>
+            <Insets top="5" right="20" bottom="5" left="20" />
+         </padding>
+      </Button>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

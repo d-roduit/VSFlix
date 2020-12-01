@@ -6,17 +6,14 @@
 <?import javafx.geometry.Insets?>
 
 <?import javafx.scene.media.MediaView?>
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.dc.SecondaryController">
+<?import javafx.scene.web.WebView?>
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.dc.WebViewController">
 
-    <MediaView fx:id="mediaView"/>
-
-    <Button fx:id="playButton" onAction="#playMedia">Play</Button>
-    <Button fx:id="pauseButton" onAction="#pauseMedia">Pause</Button>
-    <Button fx:id="replayButton" onAction="#replayMedia">Replay</Button>
-    <Label fx:id="mediaDuration" />
+    <WebView fx:id="webView"></WebView>
 
     <Label text="Secondary View" />
     <Button fx:id="secondaryButton" text="Switch to Primary View" onAction="#switchToPrimary" />
+
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>

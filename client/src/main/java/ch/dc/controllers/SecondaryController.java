@@ -28,9 +28,9 @@ public class SecondaryController {
     private Button secondaryButton;
 
     @FXML
-    private void switchToPrimary() throws IOException {
+    private void switchToConnection() throws IOException {
 //        secondaryButton.setText("heyy changement de texte");
-        Client.setRoot("primary");
+        Client.setRoot("Connection");
 
     }
 

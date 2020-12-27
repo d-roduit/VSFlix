@@ -1,13 +1,13 @@
 package ch.dc;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-
-public class PrimaryController {
+public class ConnectionController {
 
     @FXML   
     private TextField ipAddressTextField;
@@ -30,5 +30,10 @@ public class PrimaryController {
     @FXML
     private void focusIpAddressTextField() {
         ipAddressTextField.requestFocus();
+    }
+
+    @FXML
+    private void focusPortNumberTextField() {
+        portNumberTextField.requestFocus();
     }
 }

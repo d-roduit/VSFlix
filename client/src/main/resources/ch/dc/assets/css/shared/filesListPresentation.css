@@ -1,0 +1,68 @@
+#pageContentContainer {
+    -fx-padding: 30px 30px 60px 30px;
+}
+
+#pageTitleBox {
+    -fx-padding: 0px 0px 20px 0px;
+}
+
+#pageTitle {
+    -fx-text-fill: white;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+#centerContentBox {
+    -fx-spacing: 28px;
+}
+
+.mediaSectionBox {
+    -fx-spacing: 5px;
+}
+
+.mediaSectionTitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#audioSectionTitle {
+    -fx-text-fill: #F29137;
+}
+
+#videoSectionTitle {
+    -fx-text-fill: #2962FF;
+}
+
+.filesListBox {
+    -fx-spacing: 1px;
+    -fx-background-color: #707070;
+}
+
+.filesListBox BorderPane {
+    -fx-background-color: #3E3E3E;
+    -fx-cursor: hand;
+}
+
+.filesListBox BorderPane * {
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+}
+
+.filesListBox .fileTypeBox,
+.filesListBox .fileTitleBox {
+    -fx-padding: 8px 0px 8px 15px;
+}
+
+.filesListBox BorderPane:hover > .fileTitleBox,
+.filesListBox BorderPane:hover > .fileTypeBox {
+    -fx-background-color: #555555;
+}
+
+.filesListBox .fileTypeBox {
+    -fx-alignment: center;
+}
+
+.filesListBox .fileTitleBox {
+    -fx-alignment: center-left;
+    -fx-padding: 0px 0px 0px 15px;
+}

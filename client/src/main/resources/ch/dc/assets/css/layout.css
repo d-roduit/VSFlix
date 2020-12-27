@@ -1,0 +1,186 @@
+/*---------------------------------
+    Left Area
+---------------------------------*/
+#ribbonContainer {
+    -fx-background-color: linear-gradient(#1C1C1C, #282828);
+    -fx-min-width: 210px;
+    -fx-padding: 40px 0px 12px 0px;
+}
+
+#ribbonContainer #vsflixLogoBox {
+    -fx-alignment: center;
+}
+
+#ribbonContainer #vsflixClientTextBox {
+    -fx-alignment: center;
+    -fx-spacing: 4px;
+}
+
+#ribbonContainer #vsflixClientTextBox Label {
+    -fx-text-fill: #ABABAB;
+    -fx-font-size: 16;
+}
+
+#ribbonContainer #vsflixClientTextBox #clientText {
+    -fx-text-fill: #D8D8D8;
+    -fx-font-weight: bold;
+}
+
+#ribbonContainer #menuBox {
+    -fx-spacing: 10px;
+    -fx-padding: 70px 0px 0px 0px;
+}
+
+#ribbonContainer #menuBox #menuLabel {
+    -fx-text-fill: white;
+    -fx-padding: 0px 0px 0px 15px;
+    -fx-font-weight: bold;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox {
+    -fx-fill-width: true;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox .menuButtonSelected {
+    -fx-text-fill: white;
+    -fx-border-width: 0px 0px 0px 6px;
+    -fx-border-color: #9E050E;
+    -fx-background-color: linear-gradient(to right, #510207, #9F050E);
+    -fx-label-padding: 0px 0px 0px 14px;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox .menuButtonSelected > FontAwesomeIconView {
+    -fx-text-fill: white;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox Button {
+    -fx-max-width: 99999;
+    -fx-padding: 8px 0px;
+    -fx-background-radius: 0px;
+    -fx-background-color: transparent;
+    -fx-border-radius: 0px;
+    -fx-text-fill: #ABABAB;
+    -fx-alignment: center-left;
+    -fx-font-size: 14px;
+    -fx-label-padding: 0px 0px 0px 20px;
+    -fx-cursor: hand;
+    -fx-background-insets: 0px;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox Button > FontAwesomeIconView {
+    -fx-text-fill: #ABABAB;
+    -fx-label-padding: 0px 8px 0px 0px;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox Button:hover {
+    -fx-text-fill: white;
+    -fx-border-width: 0px 0px 0px 6px;
+    -fx-border-color: #4D4D4D;
+    -fx-background-color: linear-gradient(to right, #2C2C2C, #4E4E4E);
+    -fx-label-padding: 0px 0px 0px 14px;
+}
+
+#ribbonContainer #menuBox #menuButtonsBox Button:hover > FontAwesomeIconView {
+    -fx-text-fill: white;
+}
+
+#ribbonContainer #disconnectButtonBox {
+    -fx-alignment: center;
+}
+
+#ribbonContainer #disconnectButtonBox #disconnectButton {
+    -fx-text-fill: #ABABAB;
+    -fx-background-color: transparent;
+    -fx-border-color: #373737;
+    -fx-border-width: 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 5px 16px;
+    -fx-cursor: hand;
+    -fx-animated: true;
+}
+
+#ribbonContainer #disconnectButtonBox #disconnectButton:hover {
+    -fx-border-color: #ABABAB;
+    -fx-background-color: #373737;
+}
+
+
+/*---------------------------------
+    Center Area
+---------------------------------*/
+#centerScrollPane {
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: true;
+    -fx-hbar-policy: as-needed;
+    -fx-vbar-policy: as-needed;
+}
+
+#centerScrollPane,
+#centerScrollPane > .viewport {
+    -fx-background-color: linear-gradient(#292929, #333333);
+}
+
+.scroll-bar, .scroll-bar:pressed, .scroll-bar:focused {
+    -fx-font-size: 9px;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: linear-gradient(#292929, #333333);
+    -fx-border-color:transparent;
+}
+
+.scroll-bar:vertical .increment-button {
+    -fx-background-color: #333333;
+    -fx-border-color: #333333;
+    -fx-background-insets: 0px;
+    -fx-border-insets: 0px
+}
+
+.scroll-bar:vertical .decrement-button,
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color: #292929;
+    -fx-border-color: #292929;
+    -fx-background-insets: 0px;
+    -fx-border-insets: 0px;
+}
+
+.scroll-bar:vertical .increment-arrow {
+    -fx-text-fill: #333333;
+}
+
+.scroll-bar:vertical .decrement-arrow,
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-text-fill: #292929;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+
+/*---------------------------------
+    Footer Area
+---------------------------------*/
+#footerContainer {
+    -fx-background-color: #1A1A1A;
+    -fx-padding: 6px 18px;
+}
+
+#footerContainer Label {
+    -fx-text-fill: #ABABAB;
+}
+
+#footerContainer #serverAddressBox {
+    -fx-spacing: 3px;
+}
+
+#footerContainer #clientsConnectedBox {
+    -fx-spacing: 3px;
+}

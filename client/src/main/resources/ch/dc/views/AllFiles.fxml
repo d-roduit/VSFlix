@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.cathive.fonts.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<BorderPane id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.AllFilesController">
+    <top>
+        <HBox id="pageTitleBox">
+            <Label id="pageTitle">All Files</Label>
+        </HBox>
+    </top>
+    <center>
+        <VBox id="centerContentBox">
+            <VBox styleClass="mediaSectionBox">
+                <Label styleClass="mediaSectionTitle" id="audioSectionTitle">Audio</Label>
+                <VBox styleClass="filesListBox">
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Eminem - Rap God (Explicit) [Official Video]</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Lil Wayne - Mirror ft. Bruno Mars (Official Music Video)</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Rihanna - Umbrella (Orange Version) (Official Music Video) ft. JAY-Z</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Timbaland - Apologize ft. OneRepublic</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                </VBox>
+            </VBox>
+            <VBox styleClass="mediaSectionBox">
+                <Label styleClass="mediaSectionTitle" id="videoSectionTitle">Videos &amp; movies</Label>
+                <VBox styleClass="filesListBox">
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Eminem - Rap God (Explicit) [Official Video]</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Lil Wayne - Mirror ft. Bruno Mars (Official Music Video)</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Rihanna - Umbrella (Orange Version) (Official Music Video) ft. JAY-Z</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                    <BorderPane>
+                        <left>
+                            <HBox styleClass="fileTypeBox">
+                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                            </HBox>
+                        </left>
+                        <center>
+                            <HBox styleClass="fileTitleBox">
+                                <Label>Timbaland - Apologize ft. OneRepublic</Label>
+                            </HBox>
+                        </center>
+                    </BorderPane>
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
+    <stylesheets>
+        <URL value="@../assets/css/shared/filesListPresentation.css" />
+        <URL value="@../assets/css/allFiles.css" />
+    </stylesheets>
+</BorderPane>

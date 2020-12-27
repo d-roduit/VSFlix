@@ -1,5 +1,6 @@
-package ch.dc;
+package ch.dc.controllers;
 
+import ch.dc.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -16,16 +17,18 @@ public class ConnectionController {
 
     @FXML
     private void connectToServer() throws IOException {
-        String ipAddress = ipAddressTextField.getText();
-        int portNumber = Integer.parseInt(portNumberTextField.getText());
+//        String ipAddress = ipAddressTextField.getText();
+//        int portNumber = Integer.parseInt(portNumberTextField.getText());
+//
+//        Socket clientSocket = new Socket(InetAddress.getByName(ipAddress), portNumber);
 
-        Socket clientSocket = new Socket(InetAddress.getByName(ipAddress), portNumber);
+        Client.setRoot("Layout");
     }
 
-    @FXML
-    private void switchToSecondary() throws IOException {
-        Client.setRoot("secondary");
-    }
+//    @FXML
+//    private void switchToSecondary() throws IOException {
+//        Client.setRoot("Secondary");
+//    }
 
     @FXML
     private void focusIpAddressTextField() {

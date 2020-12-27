@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.cathive.fonts.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.LayoutController">
+    <left>
+        <BorderPane id="ribbonContainer">
+            <top>
+                <VBox>
+                    <HBox id="vsflixLogoBox">
+                        <ImageView id="vsflixLogo" pickOnBounds="true" preserveRatio="true" fitWidth="55">
+                            <Image url="@../assets/images/v.png" smooth="true"/>
+                        </ImageView>
+                    </HBox>
+                    <HBox id="vsflixClientTextBox">
+                        <Label>VSFlix</Label>
+                        <Label id="clientText">Client</Label>
+                    </HBox>
+                </VBox>
+            </top>
+            <center>
+                <VBox id="menuBox">
+                    <Label id="menuLabel">MENU</Label>
+                    <VBox id="menuButtonsBox">
+                        <Button fx:id="AllFilesButton" text="All Files" styleClass="menuButtonSelected">
+                            <graphic>
+                                <FontAwesomeIconView icon="ICON_LIST" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="MyFilesButton" text="My Files">
+                            <graphic>
+                                <FontAwesomeIconView icon="ICON_COG" />
+                            </graphic>
+                        </Button>
+                    </VBox>
+                </VBox>
+            </center>
+            <bottom>
+                <HBox id="disconnectButtonBox">
+                    <Button id="disconnectButton" onAction="#disconnectFromServer">Disconnect</Button>
+                </HBox>
+            </bottom>
+        </BorderPane>
+    </left>
+    <center>
+        <ScrollPane id="centerScrollPane">
+        <fx:include source="./AllFiles.fxml" fx:id="allFilesView"/>
+<!--            <fx:include source="./MyFiles.fxml" fx:id="myFilesView"/>-->
+        </ScrollPane>
+    </center>
+    <bottom>
+        <BorderPane id="footerContainer">
+            <left>
+                <HBox id="serverAddressBox">
+                    <Label>SERVER ADDRESS :</Label>
+                    <Label>10.53.108.19</Label>
+                    <Label>:</Label>
+                    <Label>45000</Label>
+                </HBox>
+            </left>
+            <right>
+                <HBox id="clientsConnectedBox">
+                    <Label>CLIENTS CONNECTED :</Label>
+                    <Label>5</Label>
+                </HBox>
+            </right>
+        </BorderPane>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@../assets/css/layout.css" />
+    </stylesheets>
+</BorderPane>
+

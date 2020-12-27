@@ -1,0 +1,50 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #171717, #292929);
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-spacing: 45px;
+}
+
+#serverAddress {
+    -fx-fill: #E6E6E6;
+    -fx-font-size: 27px;
+    -fx-font-weight: bold;
+}
+
+.fieldsHbox {
+    -fx-spacing: 8px;
+}
+
+.fieldVbox {
+    -fx-spacing: 5px;
+}
+
+Label {
+    -fx-text-fill: #BEBEBE;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+TextField {
+    -fx-background-color: #373737;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+#ipAddressTextField {
+    -fx-background-radius: 5px 0px 0px 0px;
+}
+
+#portNumberTextField {
+    -fx-pref-width: 90px;
+    -fx-background-radius: 0px 5px 0px 0px;
+}
+
+#connectButton {
+    -fx-padding: 7px 32px;
+    -fx-background-color: #E50913;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}

@@ -1,5 +1,6 @@
-package ch.dc;
+package ch.dc.controllers;
 
+import ch.dc.Client;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -15,7 +16,7 @@ public class WebViewController {
 
     @FXML
     private void switchToPrimary() throws IOException {
-        Client.setRoot("primary");
+        Client.setRoot("Connection");
 
     }
 

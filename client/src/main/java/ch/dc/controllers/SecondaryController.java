@@ -1,5 +1,6 @@
-package ch.dc;
+package ch.dc.controllers;
 
+import ch.dc.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

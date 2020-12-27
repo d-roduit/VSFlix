@@ -10,7 +10,7 @@
 <?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.dc.controllers.ConnectionController">
     <ImageView pickOnBounds="true" preserveRatio="true" fitWidth="230">
-        <Image url="@assets/images/vsflix.png"/>
+        <Image url="@../assets/images/vsflix.png"/>
     </ImageView>
     <Text id="serverAddress">Server Address</Text>
     <HBox styleClass="fieldsHbox" alignment="CENTER">
@@ -23,13 +23,9 @@
             <TextField id="portNumberTextField" fx:id="portNumberTextField" text="45000"/>
         </VBox>
     </HBox>
-    <Button id="connectButton" text="CONNECT" onAction="#switchToSecondary">
-        <padding>
-            <Insets top="5" right="20" bottom="5" left="20" />
-        </padding>
-    </Button>
+    <Button id="connectButton" onAction="#connectToServer">CONNECT</Button>
 
     <stylesheets>
-        <URL value="@assets/css/connection.css" />
+        <URL value="@../assets/css/connection.css" />
     </stylesheets>
 </VBox>

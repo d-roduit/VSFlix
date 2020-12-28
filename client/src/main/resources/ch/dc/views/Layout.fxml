@@ -26,12 +26,12 @@
                 <VBox id="menuBox">
                     <Label id="menuLabel">MENU</Label>
                     <VBox id="menuButtonsBox">
-                        <Button fx:id="AllFilesButton" text="All Files" styleClass="menuButtonSelected">
+                        <Button fx:id="allFilesButton" text="All Files" styleClass="menuButtonSelected">
                             <graphic>
                                 <FontAwesomeIconView icon="ICON_LIST" />
                             </graphic>
                         </Button>
-                        <Button fx:id="MyFilesButton" text="My Files">
+                        <Button fx:id="myFilesButton" text="My Files">
                             <graphic>
                                 <FontAwesomeIconView icon="ICON_COG" />
                             </graphic>
@@ -41,15 +41,14 @@
             </center>
             <bottom>
                 <HBox id="disconnectButtonBox">
-                    <Button id="disconnectButton" onAction="#disconnectFromServer">Disconnect</Button>
+                    <Button fx:id="disconnectButton" id="disconnectButton">Disconnect</Button>
                 </HBox>
             </bottom>
         </BorderPane>
     </left>
     <center>
-        <ScrollPane id="centerScrollPane">
-        <fx:include source="./AllFiles.fxml" fx:id="allFilesView"/>
-<!--            <fx:include source="./MyFiles.fxml" fx:id="myFilesView"/>-->
+        <ScrollPane id="centerScrollPane" fx:id="centerScrollPane">
+            <fx:include source="./AllFiles.fxml" fx:id="allFilesView"/>
         </ScrollPane>
     </center>
     <bottom>

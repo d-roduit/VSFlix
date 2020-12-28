@@ -13,10 +13,12 @@ import java.io.IOException;
  */
 public class Client extends Application {
 
-    private static Scene scene;
+    public static Stage stage;
+    public static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
+        Client.stage = stage;
         scene = new Scene(loadFXML("Connection"));
 
 
@@ -32,7 +34,7 @@ public class Client extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("views/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }

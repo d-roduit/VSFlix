@@ -11,8 +11,9 @@
     -fx-font-weight: bold;
 }
 
-.fieldsHbox {
+#fieldsHbox {
     -fx-spacing: 8px;
+    -fx-alignment: center;
 }
 
 .fieldVbox {

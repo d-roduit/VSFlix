@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.cathive.fonts.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.MediaView?>
+<?import java.net.URL?>
+<?import javafx.scene.media.Media?>
+<?import javafx.scene.media.MediaPlayer?>
+<BorderPane id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.VideoPlayerController">
+    <top>
+        <HBox id="returnToPreviousViewButtonBox">
+            <Button id="returnToPreviousViewButton">
+                <graphic>
+                    <FontAwesomeIconView icon="ICON_ARROW_LEFT"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </top>
+    <center>
+        <VBox id="mediaContentBox">
+            <Label>Lacalin.mp4</Label>
+            <MediaView preserveRatio="true">
+                <mediaPlayer>
+                    <MediaPlayer>
+                        <media>
+                            <Media source="https://droduit.ch/vsflix/lacalin.mp4" />
+                        </media>
+                    </MediaPlayer>
+                </mediaPlayer>
+            </MediaView>
+        </VBox>
+    </center>
+    <bottom>
+        <VBox id="footerBox">
+            <VBox>
+                <HBox id="mediaProgressBarBox">
+                    <Slider id="audioProgressBar" value="35" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <BorderPane id="timersBox">
+                    <left>
+                        <Label>0:23</Label>
+                    </left>
+                    <right>
+                        <Label>2:36</Label>
+                    </right>
+                </BorderPane>
+            </VBox>
+            <BorderPane>
+                <left>
+                    <HBox id="volumeControlBox">
+                        <Button styleClass="mediaControlButton">
+                            <graphic>
+                                <FontAwesomeIconView icon="ICON_VOLUME_UP" styleClass="mediaControlIcon"/>
+                            </graphic>
+                        </Button>
+                        <Slider id="volumeBar" value="100"/>
+                    </HBox>
+                </left>
+                <center>
+                    <HBox id="mediaControlsBox">
+                        <Button styleClass="mediaControlButton">
+                            <graphic>
+                                <FontAwesomeIconView icon="ICON_STEP_BACKWARD" styleClass="mediaControlIcon"/>
+                            </graphic>
+                        </Button>
+                        <Button styleClass="mediaControlButton">
+                            <graphic>
+                                <FontAwesomeIconView icon="ICON_PLAY" styleClass="mediaControlIcon"/>
+                            </graphic>
+                        </Button>
+                        <Button styleClass="mediaControlButton">
+                            <graphic>
+                                <FontAwesomeIconView icon="ICON_STEP_FORWARD" styleClass="mediaControlIcon"/>
+                            </graphic>
+                        </Button>
+                    </HBox>
+                </center>
+                <right>
+                    <Region id="spacerRegion"/>
+                </right>
+            </BorderPane>
+        </VBox>
+    </bottom>
+    <stylesheets>
+        <URL value="@../assets/css/shared/player.css" />
+        <URL value="@../assets/css/videoPlayer.css" />
+    </stylesheets>
+</BorderPane>

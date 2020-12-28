@@ -1,0 +1,30 @@
+/*---------------------------------
+    Center Area
+---------------------------------*/
+#mediaContentBox {
+    -fx-padding: 0px 100px 0px 100px;
+    -fx-alignment: center;
+    -fx-spacing: 15px;
+}
+
+#mediaContentBox #albumCover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 25, 0.0, 0.0, 0.0);
+}
+
+#mediaContentBox #audioInformationBox {
+    -fx-alignment: center;
+    -fx-spacing: 3px;
+}
+
+#mediaContentBox #audioInformationBox Label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+#mediaContentBox #audioInformationBox #author {
+    -fx-font-weight: 300;
+}
+
+#mediaContentBox #audioInformationBox #title {
+    -fx-font-weight: bold;
+}

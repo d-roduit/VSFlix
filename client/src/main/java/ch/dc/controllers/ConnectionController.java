@@ -2,6 +2,7 @@ package ch.dc.controllers;
 
 import ch.dc.Client;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -9,11 +10,25 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class ConnectionController {
+    @FXML
+    private Button connectButton;
 
     @FXML   
     private TextField ipAddressTextField;
     @FXML
     private TextField portNumberTextField;
+
+
+    @FXML
+    public void initialize() {
+        connectButton.setOnAction(actionEvent -> {
+            try {
+                connectToServer();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+    }
 
     @FXML
     private void connectToServer() throws IOException {
@@ -22,7 +37,7 @@ public class ConnectionController {
 //
 //        Socket clientSocket = new Socket(InetAddress.getByName(ipAddress), portNumber);
 
-        Client.setRoot("Layout");
+        Client.setRoot("VideoPlayer");
     }
 
 //    @FXML

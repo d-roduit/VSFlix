@@ -1,0 +1,111 @@
+/*---------------------------------
+    Top Area
+---------------------------------*/
+#pageContentContainer {
+    -fx-background-color: linear-gradient(#292929, #333333);
+
+    /* Variable */
+    -fx-vsflix-red: #E50913;
+    -fx-slider-grey: #505050;
+}
+
+#returnToPreviousViewButtonBox {
+    -fx-padding: 35px 0px 0px 35px;
+}
+
+#returnToPreviousViewButton {
+    -fx-padding: 0px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+#returnToPreviousViewButton FontAwesomeIconView {
+    -fx-text-fill: #ABABAB;
+    -fx-font-size: 18px;
+}
+
+#returnToPreviousViewButton:hover > FontAwesomeIconView{
+    -fx-text-fill: white;
+}
+
+/*---------------------------------
+    Footer Area
+---------------------------------*/
+#footerBox {
+    -fx-background-color: linear-gradient(rgba(28,28,28,0), #1C1C1C);
+    -fx-padding: 30px 140px 30px 140px;
+    -fx-spacing: 10px;
+}
+
+#footerBox .mediaControlButton {
+    -fx-padding: 0px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+#footerBox .mediaControlButton:hover > .mediaControlIcon {
+    -fx-text-fill: white;
+}
+
+#footerBox .mediaControlIcon {
+    -fx-text-fill: #dcdcdc;
+    -fx-font-size: 21px;
+}
+
+#footerBox #mediaProgressBarBox {
+}
+
+#footerBox #mediaProgressBarBox #audioProgressBar {
+    /*-fx-max-width: 999999;*/
+}
+
+#footerBox #mediaProgressBarBox #audioProgressBar .thumb {
+    -fx-background-color: -fx-vsflix-red;
+}
+
+#footerBox #mediaProgressBarBox #audioProgressBar .track {
+    -fx-background-color: linear-gradient(to right, -fx-vsflix-red 35%, -fx-slider-grey 35%);
+}
+
+#footerBox #timersBox {
+    -fx-padding: 0px 3px 0px 3px;
+}
+
+#footerBox #timersBox Label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+#footerBox #volumeControlBox {
+    -fx-padding: 0px 0px 0px 3px;
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+#footerBox #volumeControlBox,
+#footerBox #spacerRegion {
+    -fx-min-width: 150px;
+    -fx-pref-width: 150px;
+    -fx-max-width: 150px;
+}
+
+#footerBox #volumeControlBox #volumeBar {
+    -fx-min-width: 100px;
+    -fx-pref-width: 100px;
+    -fx-max-width: 100px;
+}
+
+#footerBox #volumeControlBox #volumeBar .thumb {
+    -fx-background-color: -fx-vsflix-red;
+}
+
+#footerBox #volumeControlBox #volumeBar .track {
+    -fx-background-color: linear-gradient(to right, -fx-vsflix-red 100%, -fx-slider-grey 100%);
+}
+
+#footerBox #mediaControlsBox {
+    -fx-spacing: 45px;
+    -fx-alignment: center;
+}

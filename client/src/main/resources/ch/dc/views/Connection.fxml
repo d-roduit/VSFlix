@@ -22,7 +22,7 @@
             <TextField id="portNumberTextField" fx:id="portNumberTextField" text="45000"/>
         </VBox>
     </HBox>
-    <Button id="connectButton" onAction="#connectToServer">CONNECT</Button>
+    <Button id="connectButton" fx:id="connectButton">CONNECT</Button>
 
     <stylesheets>
         <URL value="@../assets/css/connection.css" />

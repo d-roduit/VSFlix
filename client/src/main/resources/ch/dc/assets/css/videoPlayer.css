@@ -1,10 +1,25 @@
-#mediaContentBox {
+/*---------------------------------
+    Center Area
+---------------------------------*/
+#mediaContentBox,
+#mediaContentInnerBox {
     -fx-alignment: center;
-    /*-fx-background-color: pink;*/
 }
 
-#mediaContentBox Label {
+#mediaContentInnerBox {
+    -fx-spacing: 5px;
+ }
+
+#mediaContentBox #videoTitleBox {
+    -fx-alignment: center-left;
+}
+
+#mediaContentBox #videoTitleBox #videoTitle {
     -fx-font-size: 18px;
     -fx-text-fill: white;
     -fx-font-weight: 300;
+}
+
+#mediaContentBox #mediaView {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 25, 0.0, 0.0, 0.0);
 }

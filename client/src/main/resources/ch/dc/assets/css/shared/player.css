@@ -54,13 +54,6 @@
     -fx-font-size: 21px;
 }
 
-#footerBox #mediaProgressBarBox {
-}
-
-#footerBox #mediaProgressBarBox #audioProgressBar {
-    /*-fx-max-width: 999999;*/
-}
-
 #footerBox #mediaProgressBarBox #audioProgressBar .thumb {
     -fx-background-color: -fx-vsflix-red;
 }

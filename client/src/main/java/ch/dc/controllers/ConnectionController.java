@@ -35,7 +35,7 @@ public class ConnectionController {
 //
 //        Socket clientSocket = new Socket(InetAddress.getByName(ipAddress), portNumber);
 
-        Client.setRoot("VideoPlayer");
+        Client.setRoot("AudioPlayer");
     }
 
 //    @FXML

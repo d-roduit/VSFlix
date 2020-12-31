@@ -58,6 +58,12 @@ public class AudioPlayerController {
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
+                if (playerViewController != null) {
+                    if (playerViewController.mediaPlayer != null) {
+                        playerViewController.mediaPlayer.stop();
+                    }
+                }
+
                 Client.scene.setRoot(fxmlContent);
             }
         });

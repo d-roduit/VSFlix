@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 
 public class ConnectionController {
     @FXML

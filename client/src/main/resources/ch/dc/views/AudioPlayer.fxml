@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import javafx.scene.media.MediaView?>
 <BorderPane id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.AudioPlayerController">
     <top>
         <HBox id="returnToPreviousViewButtonBox">
@@ -18,6 +19,7 @@
     </top>
     <center>
         <VBox id="mediaContentBox">
+            <MediaView fx:id="mediaView" id="mediaView" />
             <ImageView id="albumCover" pickOnBounds="true" preserveRatio="true" fitWidth="125">
                 <Image url="@../assets/images/defaultAlbumCover.png"/>
             </ImageView>
@@ -31,41 +33,41 @@
         <VBox id="footerBox">
             <VBox>
                 <HBox id="mediaProgressBarBox">
-                    <Slider id="audioProgressBar" value="35" HBox.hgrow="ALWAYS"/>
+                    <Slider fx:id="mediaProgressBar" id="mediaProgressBar" HBox.hgrow="ALWAYS"/>
                 </HBox>
                 <BorderPane id="timersBox">
                     <left>
-                        <Label>0:23</Label>
+                        <Label fx:id="currentTimerLabel" />
                     </left>
                     <right>
-                        <Label>2:36</Label>
+                        <Label fx:id="totalDurationLabel" />
                     </right>
                 </BorderPane>
             </VBox>
             <BorderPane>
                 <left>
                     <HBox id="volumeControlBox">
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="volumeButton" styleClass="mediaControlButton">
                             <graphic>
-                                <FontAwesomeIconView icon="ICON_VOLUME_UP" styleClass="mediaControlIcon"/>
+                                <FontAwesomeIconView fx:id="volumeIcon" icon="ICON_VOLUME_UP" styleClass="mediaControlIcon"/>
                             </graphic>
                         </Button>
-                        <Slider id="volumeBar" value="100"/>
+                        <Slider fx:id="volumeBar" id="volumeBar" />
                     </HBox>
                 </left>
                 <center>
                     <HBox id="mediaControlsBox">
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="backwardButton" styleClass="mediaControlButton">
                             <graphic>
                                 <FontAwesomeIconView icon="ICON_STEP_BACKWARD" styleClass="mediaControlIcon"/>
                             </graphic>
                         </Button>
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="playButton" styleClass="mediaControlButton">
                             <graphic>
-                                <FontAwesomeIconView icon="ICON_PLAY" styleClass="mediaControlIcon"/>
+                                <FontAwesomeIconView fx:id="playOrPauseIcon" icon="ICON_PLAY" styleClass="mediaControlIcon"/>
                             </graphic>
                         </Button>
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="forwardButton" styleClass="mediaControlButton">
                             <graphic>
                                 <FontAwesomeIconView icon="ICON_STEP_FORWARD" styleClass="mediaControlIcon"/>
                             </graphic>

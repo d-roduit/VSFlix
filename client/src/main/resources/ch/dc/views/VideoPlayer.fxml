@@ -3,14 +3,12 @@
 <?import com.cathive.fonts.fontawesome.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.media.Media?>
-<?import javafx.scene.media.MediaPlayer?>
 <?import javafx.scene.media.MediaView?>
 <?import java.net.URL?>
 <BorderPane fx:id="pageContentContainer" id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.VideoPlayerController">
     <top>
         <HBox id="returnToPreviousViewButtonBox">
-            <Button id="returnToPreviousViewButton">
+            <Button fx:id="returnToPreviousViewButton" id="returnToPreviousViewButton">
                 <graphic>
                     <FontAwesomeIconView icon="ICON_ARROW_LEFT"/>
                 </graphic>
@@ -23,15 +21,7 @@
                 <HBox id="videoTitleBox">
                     <Label id="videoTitle">Lacalin.mp4</Label>
                 </HBox>
-                <MediaView fx:id="mediaView" id="mediaView" preserveRatio="true">
-                    <mediaPlayer>
-                        <MediaPlayer>
-                            <media>
-                                <Media source="https://scontent-frx5-1.cdninstagram.com/v/t50.2886-16/71719115_174055287087120_2640995605055275759_n.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6InZ0c192b2RfdXJsZ2VuLjcyMC5mZWVkLmRlZmF1bHQiLCJxZV9ncm91cHMiOiJbXCJpZ193ZWJfZGVsaXZlcnlfdnRzX290ZlwiXSJ9&amp;_nc_ht=scontent-frx5-1.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=pvp3j5EK67IAX87a9jt&amp;vs=17874984721444186_3450076661&amp;_nc_vs=HBksFQAYJEdNdFlSZ1FRNEk1blRaNEFBTzhDc0p5Q3M2WWtia1lMQUFBRhUAAsgBABUAGCRHRFpUUmdUTW0zUTFuYTBDQUZtODF3X0kybkpaYmtZTEFBQUYVAgLIAQAoABgAGwAVAAAmtMHx2oXNwD8VAigCQzMsF0A6MzMzMzMzGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHXqBwA%3D&amp;_nc_rid=f04e50d787&amp;oe=5FEDA414&amp;oh=8481400f0c348a2223377a12ef7a0940&amp;dl=1" />
-                            </media>
-                        </MediaPlayer>
-                    </mediaPlayer>
-                </MediaView>
+                <MediaView fx:id="mediaView" id="mediaView" />
             </VBox>
         </HBox>
     </center>
@@ -39,41 +29,41 @@
         <VBox id="footerBox">
             <VBox>
                 <HBox id="mediaProgressBarBox">
-                    <Slider id="audioProgressBar" value="35" HBox.hgrow="ALWAYS"/>
+                    <Slider fx:id="mediaProgressBar" id="mediaProgressBar" HBox.hgrow="ALWAYS"/>
                 </HBox>
                 <BorderPane id="timersBox">
                     <left>
-                        <Label>0:23</Label>
+                        <Label fx:id="currentTimerLabel" />
                     </left>
                     <right>
-                        <Label>2:36</Label>
+                        <Label fx:id="totalDurationLabel" />
                     </right>
                 </BorderPane>
             </VBox>
             <BorderPane>
                 <left>
                     <HBox id="volumeControlBox">
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="volumeButton" id="volumeButton" styleClass="mediaControlButton">
                             <graphic>
-                                <FontAwesomeIconView icon="ICON_VOLUME_UP" styleClass="mediaControlIcon"/>
+                                <FontAwesomeIconView fx:id="volumeIcon" icon="ICON_VOLUME_UP" styleClass="mediaControlIcon"/>
                             </graphic>
                         </Button>
-                        <Slider id="volumeBar" value="100"/>
+                        <Slider fx:id="volumeBar" id="volumeBar" />
                     </HBox>
                 </left>
                 <center>
                     <HBox id="mediaControlsBox">
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="backwardButton" styleClass="mediaControlButton">
                             <graphic>
                                 <FontAwesomeIconView icon="ICON_STEP_BACKWARD" styleClass="mediaControlIcon"/>
                             </graphic>
                         </Button>
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="playButton" styleClass="mediaControlButton">
                             <graphic>
-                                <FontAwesomeIconView icon="ICON_PLAY" styleClass="mediaControlIcon"/>
+                                <FontAwesomeIconView fx:id="playOrPauseIcon" icon="ICON_PLAY" styleClass="mediaControlIcon"/>
                             </graphic>
                         </Button>
-                        <Button styleClass="mediaControlButton">
+                        <Button fx:id="forwardButton" styleClass="mediaControlButton">
                             <graphic>
                                 <FontAwesomeIconView icon="ICON_STEP_FORWARD" styleClass="mediaControlIcon"/>
                             </graphic>

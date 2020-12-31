@@ -5,8 +5,8 @@
     -fx-background-color: linear-gradient(#292929, #333333);
 
     /* Variable */
-    -fx-vsflix-red: #E50913;
-    -fx-slider-grey: #505050;
+    -slider-filled-track-color: #E50913;
+    -slider-track-color: #505050;
 }
 
 #returnToPreviousViewButtonBox {
@@ -54,12 +54,17 @@
     -fx-font-size: 21px;
 }
 
-#footerBox #mediaProgressBarBox #audioProgressBar .thumb {
-    -fx-background-color: -fx-vsflix-red;
+#footerBox #mediaProgressBarBox #mediaProgressBar {
+    -fx-cursor: hand;
+    -mediaProgressBar-filled-track-color: -slider-track-color;
 }
 
-#footerBox #mediaProgressBarBox #audioProgressBar .track {
-    -fx-background-color: linear-gradient(to right, -fx-vsflix-red 35%, -fx-slider-grey 35%);
+#footerBox #mediaProgressBarBox #mediaProgressBar .thumb {
+    -fx-background-color: -slider-filled-track-color;
+}
+
+#footerBox #mediaProgressBarBox #mediaProgressBar .track {
+    -fx-background-color: -mediaProgressBar-filled-track-color;
 }
 
 #footerBox #timersBox {
@@ -73,29 +78,38 @@
 
 #footerBox #volumeControlBox {
     -fx-padding: 0px 0px 0px 3px;
-    -fx-spacing: 10px;
+    -fx-spacing: 6px;
     -fx-alignment: center-left;
 }
 
 #footerBox #volumeControlBox,
 #footerBox #spacerRegion {
-    -fx-min-width: 150px;
-    -fx-pref-width: 150px;
-    -fx-max-width: 150px;
+    -fx-min-width: 145px;
+    -fx-pref-width: 145px;
+    -fx-max-width: 145px;
+}
+
+#footerBox #volumeControlBox #volumeButton {
+    -fx-alignment: center-left;
+    -fx-min-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-max-width: 25px;
 }
 
 #footerBox #volumeControlBox #volumeBar {
+    -volumeBar-filled-track-color: -slider-filled-track-color;
     -fx-min-width: 100px;
     -fx-pref-width: 100px;
     -fx-max-width: 100px;
+    -fx-cursor: hand;
 }
 
 #footerBox #volumeControlBox #volumeBar .thumb {
-    -fx-background-color: -fx-vsflix-red;
+    -fx-background-color: -slider-filled-track-color;
 }
 
 #footerBox #volumeControlBox #volumeBar .track {
-    -fx-background-color: linear-gradient(to right, -fx-vsflix-red 100%, -fx-slider-grey 100%);
+    -fx-background-color: -volumeBar-filled-track-color;
 }
 
 #footerBox #mediaControlsBox {

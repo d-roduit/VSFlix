@@ -17,35 +17,14 @@
                 <Label styleClass="mediaSectionTitle" id="audioSectionTitle">Audio</Label>
                 <VBox>
                     <VBox fx:id="audioFilesListBox" styleClass="filesListBox">
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIcon icon="MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Eminem - Rap God (Explicit) [Official Video]</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIcon icon="UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
                     </VBox>
                     <Button fx:id="addAudioButton" styleClass="addMediaButton">
                         <graphic>
                             <FontAwesomeIcon icon="PLUS"/>
                         </graphic>
+                        <tooltip>
+                            <Tooltip text="Add audio file to share" />
+                        </tooltip>
                     </Button>
                 </VBox>
             </VBox>
@@ -53,35 +32,14 @@
                 <Label styleClass="mediaSectionTitle" id="videoSectionTitle">Videos &amp; movies</Label>
                 <VBox>
                     <VBox fx:id="videoFilesListBox" styleClass="filesListBox">
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIcon icon="VIDEO"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Eminem - Rap God (Explicit) [Official Video]</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIcon icon="UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
                     </VBox>
                     <Button fx:id="addVideoButton" styleClass="addMediaButton">
                         <graphic>
                             <FontAwesomeIcon icon="PLUS"/>
                         </graphic>
+                        <tooltip>
+                            <Tooltip text="Add video file to share" />
+                        </tooltip>
                     </Button>
                 </VBox>
             </VBox>

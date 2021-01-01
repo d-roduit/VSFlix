@@ -29,14 +29,19 @@
     -fx-border-insets: 0px;
 }
 
-.filesListBox .unshareFileBox .unshareFileButton FontAwesomeIcon {
-    -fx-text-fill: #FE3F48;
-}
-
 .filesListBox .unshareFileBox .unshareFileButton:hover {
     -fx-background-color: #FE3F48;
 }
 
 .filesListBox .unshareFileBox .unshareFileButton:hover > FontAwesomeIcon {
     -fx-text-fill: white;
+}
+
+.filesListBox .unshareFileBox .unshareFileButton FontAwesomeIcon {
+    -fx-text-fill: #FE3F48;
+}
+
+.addMediaButton .tooltip,
+.filesListBox .unshareFileButton .tooltip {
+    -fx-font-size: 12px;
 }

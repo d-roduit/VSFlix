@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import ch.dc.FontAwesomeIcon?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.LayoutController">
     <left>
         <BorderPane id="ribbonContainer">
@@ -28,12 +29,12 @@
                     <VBox id="menuButtonsBox">
                         <Button fx:id="allFilesButton" text="All Files" styleClass="menuButtonSelected">
                             <graphic>
-                                <FontAwesomeIconView icon="ICON_LIST" />
+                                <FontAwesomeIcon icon="LIST" />
                             </graphic>
                         </Button>
                         <Button fx:id="myFilesButton" text="My Files">
                             <graphic>
-                                <FontAwesomeIconView icon="ICON_COG" />
+                                <FontAwesomeIcon icon="USER" />
                             </graphic>
                         </Button>
                     </VBox>

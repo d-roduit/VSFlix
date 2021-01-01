@@ -1,13 +1,15 @@
 package ch.dc.controllers;
 
-import com.cathive.fonts.fontawesome.FontAwesomeIcon;
-import com.cathive.fonts.fontawesome.FontAwesomeIconView;
+
+import ch.dc.FontAwesome;
+import ch.dc.FontAwesomeIcon;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
@@ -19,7 +21,7 @@ public class PlayerController {
     public MediaPlayer mediaPlayer;
     public MediaView mediaView;
     private boolean isMediaAtEnd = false;
-    private MediaPlayer.Status mediaPlayerStatusBeforeProgressBarPressed;
+    private Status mediaPlayerStatusBeforeProgressBarPressed;
     private double volumeBeforeMute = 1.0;
 
     @FXML
@@ -35,7 +37,7 @@ public class PlayerController {
     public Button volumeButton;
 
     @FXML
-    public FontAwesomeIconView volumeIcon;
+    public FontAwesomeIcon volumeIcon;
 
     @FXML
     public Slider volumeBar;
@@ -47,7 +49,7 @@ public class PlayerController {
     public Button playButton;
 
     @FXML
-    public FontAwesomeIconView playOrPauseIcon;
+    public FontAwesomeIcon playOrPauseIcon;
 
     @FXML
     public Button forwardButton;
@@ -77,9 +79,9 @@ public class PlayerController {
             currentTimerLabel.setText(createDurationAsText(mediaPlayer.getStartTime()));
         });
 
-        mediaPlayer.setOnPlaying(() -> playOrPauseIcon.setIcon(FontAwesomeIcon.ICON_PAUSE));
-        mediaPlayer.setOnPaused(() -> playOrPauseIcon.setIcon(FontAwesomeIcon.ICON_PLAY));
-        mediaPlayer.setOnStopped(() -> playOrPauseIcon.setIcon(FontAwesomeIcon.ICON_PLAY));
+        mediaPlayer.setOnPlaying(() -> playOrPauseIcon.setIcon(FontAwesome.PAUSE));
+        mediaPlayer.setOnPaused(() -> playOrPauseIcon.setIcon(FontAwesome.PLAY));
+        mediaPlayer.setOnStopped(() -> playOrPauseIcon.setIcon(FontAwesome.PLAY));
 
         mediaPlayer.setOnEndOfMedia(() -> {
             mediaPlayer.stop();
@@ -110,7 +112,7 @@ public class PlayerController {
         mediaProgressBar.setOnMousePressed(mouseEvent -> {
             mediaPlayerStatusBeforeProgressBarPressed = mediaPlayer.getStatus();
 
-            if (mediaPlayer.getStatus() == MediaPlayer.Status.READY) {
+            if (mediaPlayer.getStatus() == Status.READY) {
                 mediaPlayer.play();
             }
 
@@ -135,7 +137,7 @@ public class PlayerController {
             if (newTime.toMillis() == mediaPlayer.getStopTime().toMillis()) {
                 mediaPlayer.stop();
             } else {
-                if (mediaPlayerStatusBeforeProgressBarPressed == MediaPlayer.Status.PLAYING) {
+                if (mediaPlayerStatusBeforeProgressBarPressed == Status.PLAYING) {
                     mediaPlayer.play();
                 }
 
@@ -151,9 +153,9 @@ public class PlayerController {
 
         volumeBar.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue.doubleValue() == 0.0 && newValue.doubleValue() > 0.0) {
-                volumeIcon.setIcon(FontAwesomeIcon.ICON_VOLUME_UP);
+                volumeIcon.setIcon(FontAwesome.VOLUME_UP);
             } else if (oldValue.doubleValue() > 0.0 && newValue.doubleValue() == 0.0) {
-                volumeIcon.setIcon(FontAwesomeIcon.ICON_VOLUME_OFF);
+                volumeIcon.setIcon(FontAwesome.VOLUME_MUTE);
             }
 
             String newStyle = String.format(Locale.ROOT, "-volumeBar-filled-track-color: " +
@@ -185,14 +187,14 @@ public class PlayerController {
     }
 
     private void playOrPause() {
-        MediaPlayer.Status status = mediaPlayer.getStatus();
+        Status status = mediaPlayer.getStatus();
 
-        if (status == MediaPlayer.Status.UNKNOWN  || status == MediaPlayer.Status.HALTED) {
+        if (status == Status.UNKNOWN  || status == Status.HALTED) {
             // don't do anything in these states
             return;
         }
 
-        if (status == MediaPlayer.Status.PAUSED || status == MediaPlayer.Status.READY || status == MediaPlayer.Status.STOPPED) {
+        if (status == Status.PAUSED || status == Status.READY || status == Status.STOPPED) {
             // Rewind the movie if we're sitting at the end
             if (isMediaAtEnd) {
                 mediaPlayer.seek(mediaPlayer.getStartTime());
@@ -205,22 +207,32 @@ public class PlayerController {
     }
 
     private void goBackward() {
-        MediaPlayer.Status status = mediaPlayer.getStatus();
+        Status status = mediaPlayer.getStatus();
 
-        if (status == MediaPlayer.Status.UNKNOWN  || status == MediaPlayer.Status.HALTED) {
+        if (status == Status.UNKNOWN  || status == Status.HALTED) {
             // don't do anything in these states
             return;
+        }
+
+        if (status == Status.READY) {
+            mediaPlayer.play();
+            mediaPlayer.pause();
         }
 
         mediaPlayer.seek(mediaPlayer.getStartTime());
     }
 
     private void goForward() {
-        MediaPlayer.Status status = mediaPlayer.getStatus();
+        Status status = mediaPlayer.getStatus();
 
-        if (status == MediaPlayer.Status.UNKNOWN  || status == MediaPlayer.Status.HALTED) {
+        if (status == Status.UNKNOWN  || status == Status.HALTED) {
             // don't do anything in these states
             return;
+        }
+
+        if (status == Status.READY) {
+            mediaPlayer.play();
+            mediaPlayer.pause();
         }
 
         mediaPlayer.stop();

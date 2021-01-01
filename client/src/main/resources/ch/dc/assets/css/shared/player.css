@@ -20,12 +20,12 @@
     -fx-cursor: hand;
 }
 
-#returnToPreviousViewButton FontAwesomeIconView {
+#returnToPreviousViewButton FontAwesomeIcon {
     -fx-text-fill: #ABABAB;
     -fx-font-size: 18px;
 }
 
-#returnToPreviousViewButton:hover > FontAwesomeIconView{
+#returnToPreviousViewButton:hover > FontAwesomeIcon{
     -fx-text-fill: white;
 }
 
@@ -91,9 +91,9 @@
 
 #footerBox #volumeControlBox #volumeButton {
     -fx-alignment: center-left;
-    -fx-min-width: 25px;
-    -fx-pref-width: 25px;
-    -fx-max-width: 25px;
+    -fx-min-width: 27px;
+    -fx-pref-width: 27px;
+    -fx-max-width: 27px;
 }
 
 #footerBox #volumeControlBox #volumeBar {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cathive.fonts.fontawesome.*?>
+<!--<?import com.cathive.fonts.fontawesome.*?>-->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import ch.dc.FontAwesomeIcon?>
 <BorderPane id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.MyFilesController">
     <top>
         <HBox id="pageTitleBox">
@@ -15,11 +16,11 @@
             <VBox styleClass="mediaSectionBox">
                 <Label styleClass="mediaSectionTitle" id="audioSectionTitle">Audio</Label>
                 <VBox>
-                    <VBox styleClass="filesListBox">
+                    <VBox fx:id="audioFilesListBox" styleClass="filesListBox">
                         <BorderPane>
                             <left>
                                 <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
+                                    <FontAwesomeIcon icon="MUSIC"/>
                                 </HBox>
                             </left>
                             <center>
@@ -31,367 +32,7 @@
                                 <HBox styleClass="unshareFileBox">
                                     <Button styleClass="unshareFileButton">
                                         <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Lil Wayne - Mirror ft. Bruno Mars (Official Music Video)</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Rihanna - Umbrella (Orange Version) (Official Music Video) ft. JAY-Z</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_MUSIC"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
+                                            <FontAwesomeIcon icon="UNLINK"/>
                                         </graphic>
                                         <tooltip>
                                             <Tooltip text="Unshare" />
@@ -401,9 +42,9 @@
                             </right>
                         </BorderPane>
                     </VBox>
-                    <Button styleClass="addMediaButton">
+                    <Button fx:id="addAudioButton" styleClass="addMediaButton">
                         <graphic>
-                            <FontAwesomeIconView icon="ICON_PLUS"/>
+                            <FontAwesomeIcon icon="PLUS"/>
                         </graphic>
                     </Button>
                 </VBox>
@@ -411,11 +52,11 @@
             <VBox styleClass="mediaSectionBox">
                 <Label styleClass="mediaSectionTitle" id="videoSectionTitle">Videos &amp; movies</Label>
                 <VBox>
-                    <VBox styleClass="filesListBox">
+                    <VBox fx:id="videoFilesListBox" styleClass="filesListBox">
                         <BorderPane>
                             <left>
                                 <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                                    <FontAwesomeIcon icon="VIDEO"/>
                                 </HBox>
                             </left>
                             <center>
@@ -427,79 +68,7 @@
                                 <HBox styleClass="unshareFileBox">
                                     <Button styleClass="unshareFileButton">
                                         <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Lil Wayne - Mirror ft. Bruno Mars (Official Music Video)</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Rihanna - Umbrella (Orange Version) (Official Music Video) ft. JAY-Zzzzzzz</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
-                                        </graphic>
-                                        <tooltip>
-                                            <Tooltip text="Unshare" />
-                                        </tooltip>
-                                    </Button>
-                                </HBox>
-                            </right>
-                        </BorderPane>
-                        <BorderPane>
-                            <left>
-                                <HBox styleClass="fileTypeBox">
-                                    <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
-                                </HBox>
-                            </left>
-                            <center>
-                                <HBox styleClass="fileTitleBox">
-                                    <Label>Timbaland - Apologize ft. OneRepublic</Label>
-                                </HBox>
-                            </center>
-                            <right>
-                                <HBox styleClass="unshareFileBox">
-                                    <Button styleClass="unshareFileButton">
-                                        <graphic>
-                                            <FontAwesomeIconView icon="ICON_UNLINK"/>
+                                            <FontAwesomeIcon icon="UNLINK"/>
                                         </graphic>
                                         <tooltip>
                                             <Tooltip text="Unshare" />
@@ -509,9 +78,9 @@
                             </right>
                         </BorderPane>
                     </VBox>
-                    <Button styleClass="addMediaButton">
+                    <Button fx:id="addVideoButton" styleClass="addMediaButton">
                         <graphic>
-                            <FontAwesomeIconView icon="ICON_PLUS"/>
+                            <FontAwesomeIcon icon="PLUS"/>
                         </graphic>
                     </Button>
                 </VBox>

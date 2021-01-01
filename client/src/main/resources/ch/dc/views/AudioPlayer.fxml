@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cathive.fonts.fontawesome.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.media.MediaView?>
+<?import ch.dc.FontAwesomeIcon?>
 <BorderPane id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.AudioPlayerController">
     <top>
         <HBox id="returnToPreviousViewButtonBox">
             <Button fx:id="returnToPreviousViewButton" id="returnToPreviousViewButton">
                 <graphic>
-                    <FontAwesomeIconView icon="ICON_ARROW_LEFT"/>
+                    <FontAwesomeIcon icon="ARROW_LEFT"/>
                 </graphic>
             </Button>
         </HBox>

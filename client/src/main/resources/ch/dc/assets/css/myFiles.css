@@ -11,7 +11,7 @@
     -fx-background-color: #3B8B32;
 }
 
-.mediaSectionBox .addMediaButton FontAwesomeIconView {
+.mediaSectionBox .addMediaButton FontAwesomeIcon {
     -fx-text-fill: white;
 }
 
@@ -20,16 +20,16 @@
 }
 
 .filesListBox .unshareFileBox .unshareFileButton {
-    -fx-background-color: #3E3E3E;
+    -fx-max-height: Infinity;
+    -fx-background-color: transparent;
     -fx-cursor: hand;
     -fx-background-radius: 0px;
     -fx-border-radius: 0px;
     -fx-background-insets: 0px;
     -fx-border-insets: 0px;
-    -fx-padding: 6px 10px;
 }
 
-.filesListBox .unshareFileBox .unshareFileButton FontAwesomeIconView {
+.filesListBox .unshareFileBox .unshareFileButton FontAwesomeIcon {
     -fx-text-fill: #FE3F48;
 }
 
@@ -37,6 +37,6 @@
     -fx-background-color: #FE3F48;
 }
 
-.filesListBox .unshareFileBox .unshareFileButton:hover > FontAwesomeIconView {
+.filesListBox .unshareFileBox .unshareFileButton:hover > FontAwesomeIcon {
     -fx-text-fill: white;
 }

@@ -5,9 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * JavaFX Client App
@@ -22,6 +24,10 @@ public class Client extends Application {
         Client.stage = stage;
         scene = new Scene(loadFXML("Connection"));
 
+        Font fontawesomeFont = Font.loadFont(Client.class.getResourceAsStream("assets/fonts/Font-Awesome-5-Free-Solid-900.otf"), 13);
+        if (fontawesomeFont == null) {
+            // TODO: Log font loading error
+        }
 
         stage.getIcons().add(new Image(getClass().getResourceAsStream("assets/images/v_small.png")));
         stage.setScene(scene);

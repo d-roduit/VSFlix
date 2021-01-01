@@ -49,7 +49,7 @@
     -fx-label-padding: 0px 0px 0px 14px;
 }
 
-#ribbonContainer #menuBox #menuButtonsBox .menuButtonSelected > FontAwesomeIconView {
+#ribbonContainer #menuBox #menuButtonsBox .menuButtonSelected > FontAwesomeIcon {
     -fx-text-fill: white;
 }
 
@@ -67,7 +67,7 @@
     -fx-background-insets: 0px;
 }
 
-#ribbonContainer #menuBox #menuButtonsBox Button > FontAwesomeIconView {
+#ribbonContainer #menuBox #menuButtonsBox Button > FontAwesomeIcon {
     -fx-text-fill: #ABABAB;
     -fx-label-padding: 0px 8px 0px 0px;
 }
@@ -80,7 +80,7 @@
     -fx-label-padding: 0px 0px 0px 14px;
 }
 
-#ribbonContainer #menuBox #menuButtonsBox Button:hover > FontAwesomeIconView {
+#ribbonContainer #menuBox #menuButtonsBox Button:hover > FontAwesomeIcon {
     -fx-text-fill: white;
 }
 
@@ -114,6 +114,10 @@
     -fx-fit-to-height: true;
     -fx-hbar-policy: as-needed;
     -fx-vbar-policy: as-needed;
+    -fx-border-insets: 0px;
+    -fx-border-radius: 0px;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
 }
 
 #centerScrollPane,

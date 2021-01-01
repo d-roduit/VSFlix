@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cathive.fonts.fontawesome.FontAwesomeIconView?>
+<?import ch.dc.FontAwesomeIcon?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox id="footerBox" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.PlayerController">
@@ -22,7 +22,7 @@
             <HBox id="volumeControlBox">
                 <Button fx:id="volumeButton" id="volumeButton" styleClass="mediaControlButton">
                     <graphic>
-                        <FontAwesomeIconView fx:id="volumeIcon" icon="ICON_VOLUME_UP" styleClass="mediaControlIcon"/>
+                        <FontAwesomeIcon fx:id="volumeIcon" icon="VOLUME_UP" styleClass="mediaControlIcon"/>
                     </graphic>
                 </Button>
                 <Slider fx:id="volumeBar" id="volumeBar" />
@@ -32,17 +32,17 @@
             <HBox id="mediaControlsBox">
                 <Button fx:id="backwardButton" styleClass="mediaControlButton">
                     <graphic>
-                        <FontAwesomeIconView icon="ICON_STEP_BACKWARD" styleClass="mediaControlIcon"/>
+                        <FontAwesomeIcon icon="STEP_BACKWARD" styleClass="mediaControlIcon"/>
                     </graphic>
                 </Button>
                 <Button fx:id="playButton" styleClass="mediaControlButton">
                     <graphic>
-                        <FontAwesomeIconView fx:id="playOrPauseIcon" icon="ICON_PLAY" styleClass="mediaControlIcon"/>
+                        <FontAwesomeIcon fx:id="playOrPauseIcon" icon="PLAY" styleClass="mediaControlIcon"/>
                     </graphic>
                 </Button>
                 <Button fx:id="forwardButton" styleClass="mediaControlButton">
                     <graphic>
-                        <FontAwesomeIconView icon="ICON_STEP_FORWARD" styleClass="mediaControlIcon"/>
+                        <FontAwesomeIcon icon="STEP_FORWARD" styleClass="mediaControlIcon"/>
                     </graphic>
                 </Button>
             </HBox>

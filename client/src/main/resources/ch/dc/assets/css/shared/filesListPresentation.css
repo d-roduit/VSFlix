@@ -43,14 +43,19 @@
     -fx-cursor: hand;
 }
 
-.filesListBox BorderPane * {
+.filesListBox BorderPane Label {
     -fx-font-size: 13px;
     -fx-text-fill: white;
 }
 
+.filesListBox BorderPane FontAwesomeIcon {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
 .filesListBox .fileTypeBox,
 .filesListBox .fileTitleBox {
-    -fx-padding: 8px 0px 8px 15px;
+    -fx-padding: 8px 0px 8px 12px;
 }
 
 .filesListBox BorderPane:hover > .fileTitleBox,

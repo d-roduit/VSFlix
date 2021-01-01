@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.cathive.fonts.fontawesome.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import ch.dc.FontAwesomeIcon?>
 <BorderPane id="pageContentContainer" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.dc.controllers.AllFilesController">
     <top>
         <HBox id="pageTitleBox">
@@ -18,7 +18,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                                <FontAwesomeIcon icon="MUSIC" />
                             </HBox>
                         </left>
                         <center>
@@ -30,7 +30,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                                <FontAwesomeIcon icon="MUSIC" />
                             </HBox>
                         </left>
                         <center>
@@ -42,7 +42,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                                <FontAwesomeIcon icon="MUSIC" />
                             </HBox>
                         </left>
                         <center>
@@ -54,7 +54,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_MUSIC"/>
+                                <FontAwesomeIcon icon="MUSIC" />
                             </HBox>
                         </left>
                         <center>
@@ -71,7 +71,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                                <FontAwesomeIcon icon="VIDEO" />
                             </HBox>
                         </left>
                         <center>
@@ -83,7 +83,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                                <FontAwesomeIcon icon="VIDEO" />
                             </HBox>
                         </left>
                         <center>
@@ -95,7 +95,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                                <FontAwesomeIcon icon="VIDEO" />
                             </HBox>
                         </left>
                         <center>
@@ -107,7 +107,7 @@
                     <BorderPane>
                         <left>
                             <HBox styleClass="fileTypeBox">
-                                <FontAwesomeIconView icon="ICON_FACETIME_VIDEO"/>
+                                <FontAwesomeIcon icon="VIDEO" />
                             </HBox>
                         </left>
                         <center>

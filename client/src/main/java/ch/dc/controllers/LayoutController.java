@@ -1,8 +1,8 @@
 package ch.dc.controllers;
 
 import ch.dc.Client;
+import ch.dc.Router;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -11,6 +11,8 @@ import javafx.scene.control.ScrollPane;
 import java.io.IOException;
 
 public class LayoutController {
+
+    private final Router router = Router.getInstance();
 
     private Task<Parent> loadView;
 
@@ -28,6 +30,28 @@ public class LayoutController {
 
     @FXML
     public void initialize() {
+        String partialViewToLoad = "AllFiles";
+
+        if (router.hasPartialViewRequested()) {
+            System.out.println("has partial view requested");
+
+            String partialViewRequested = router.getPartialViewRequested();
+
+            System.out.println("partialViewRequested : " + partialViewRequested);
+            System.out.println("partialViewRequested (2nd time) : " + router.getPartialViewRequested());
+
+            if (partialViewRequested.equals("MyFiles")) {
+                partialViewToLoad = partialViewRequested;
+            }
+        }
+
+        if (partialViewToLoad.equals("MyFiles")) {
+            displayMyFilesView();
+        } else {
+            displayAllFilesView();
+        }
+
+
         allFilesButton.setOnAction(event -> {
             displayAllFilesView();
         });

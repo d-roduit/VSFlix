@@ -52,6 +52,7 @@
 #footerBox .mediaControlIcon {
     -fx-text-fill: #dcdcdc;
     -fx-font-size: 21px;
+    -fx-min-width: 20px;
 }
 
 #footerBox #mediaProgressBarBox #mediaProgressBar {

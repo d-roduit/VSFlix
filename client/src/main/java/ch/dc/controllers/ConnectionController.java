@@ -1,6 +1,8 @@
 package ch.dc.controllers;
 
 import ch.dc.Client;
+import ch.dc.Router;
+import ch.dc.models.ClientModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -8,17 +10,26 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class ConnectionController {
+
+    private final static String viewName = "Connection";
+
+    private final Router router = Router.getInstance();
+    private final ClientModel clientModel = ClientModel.getInstance();
+
     @FXML
     private Button connectButton;
 
     @FXML   
     private TextField ipAddressTextField;
+
     @FXML
     private TextField portNumberTextField;
 
 
     @FXML
     public void initialize() {
+        router.setCurrentRoute(viewName);
+
         connectButton.setOnAction(actionEvent -> {
             try {
                 connectToServer();

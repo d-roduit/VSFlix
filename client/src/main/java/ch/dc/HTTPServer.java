@@ -1,5 +1,6 @@
 package ch.dc;
 
+import ch.dc.models.ClientModel;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -11,8 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 public class HTTPServer {
+    private final ClientModel clientModel = ClientModel.getInstance();
+
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8500), 0);
+
+//        clientModel.setHTTPServerPort(port);
+
         HttpContext context = server.createContext("/");
         context.setHandler(HTTPServer::handleRequest);
         server.start();

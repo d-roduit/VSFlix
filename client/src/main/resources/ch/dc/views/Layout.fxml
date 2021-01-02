@@ -49,7 +49,7 @@
     </left>
     <center>
         <ScrollPane id="centerScrollPane" fx:id="centerScrollPane">
-            <fx:include source="./AllFiles.fxml" fx:id="allFilesView"/>
+<!--            <fx:include source="./AllFiles.fxml" fx:id="allFilesView"/>-->
         </ScrollPane>
     </center>
     <bottom>

@@ -54,11 +54,10 @@ public class PlayerController {
     @FXML
     public Button forwardButton;
 
-    public void initializePlayer(String mediaSourcePath, MediaView mediaView) {
-        this.mediaSourcePath = mediaSourcePath;
+    public void initializePlayer(Media media, MediaView mediaView) {
+        this.media = media;
+        this.mediaSourcePath = media.getSource();
         this.mediaView = mediaView;
-
-        media = new Media(mediaSourcePath);
 
         media.setOnError(() -> {
             // TODO: Log Error
@@ -66,6 +65,8 @@ public class PlayerController {
         });
 
         mediaPlayer = new MediaPlayer(media);
+
+        mediaPlayer.setAutoPlay(true);
 
         mediaPlayer.currentTimeProperty().addListener((observable, oldTime, newTime) -> {
             currentTimerLabel.setText(createDurationAsText(newTime));

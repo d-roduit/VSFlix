@@ -20,12 +20,12 @@
     <center>
         <VBox id="mediaContentBox">
             <MediaView fx:id="mediaView" id="mediaView" />
-            <ImageView id="albumCover" pickOnBounds="true" preserveRatio="true" fitWidth="125">
+            <ImageView fx:id="albumCoverImageView" id="albumCover" pickOnBounds="true" preserveRatio="true" fitWidth="125">
                 <Image url="@../assets/images/defaultAlbumCover.png"/>
             </ImageView>
             <VBox id="audioInformationBox">
-                <Label id="author">Kevin MacLeod</Label>
-                <Label id="title">Impact Moderato</Label>
+                <Label fx:id="artistLabel" id="artist" />
+                <Label fx:id="titleLabel" id="title" />
             </VBox>
         </VBox>
     </center>

@@ -17,6 +17,7 @@ public class ClientHandler extends Thread {
         HTTPPORT,
         GETALLFILES,
         ADDFILE,
+        UNSHAREFILE,
         GETCONNECTEDCLIENTS,
         DISCONNECT
     }
@@ -65,6 +66,18 @@ public class ClientHandler extends Thread {
                             pOut.println("File was added.");
                         }catch (Exception e){
                             pOut.println("Invalid input.");
+                        }
+                        pOut.flush();
+                        break;
+                    case UNSHAREFILE:
+                        System.out.println("Remove a file");
+                        File fileToUnshare = new File(msgArray[1]);
+                        try{
+                            FileType filetype = FileType.valueOf(msgArray[2]);
+                            client.unshareFile(fileToUnshare, filetype);
+                            pOut.println("File was removed.");
+                        }catch (Exception e){
+                            pOut.println("Invalid input");
                         }
                         pOut.flush();
                         break;

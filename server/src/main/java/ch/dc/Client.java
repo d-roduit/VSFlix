@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,6 +50,15 @@ public class Client {
     public void addFile(File file, FileType fileType) {
         FileEntry fileEntry = new FileEntry(file, fileType, getIp(), getHttpPort());
         files.add(fileEntry);
+    }
+
+    public void unshareFile(File file, FileType fileType) {
+        for (Iterator<FileEntry> iter = files.listIterator(); iter.hasNext(); ) {
+            FileEntry fileEntry = iter.next();
+            if(fileEntry.getFile().equals(file) && fileEntry.getFileType().equals(fileType)){
+                files.remove(fileEntry);
+            }
+        }
     }
 
     private String extractIp(Socket socket) {

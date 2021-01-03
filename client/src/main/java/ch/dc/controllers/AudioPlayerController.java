@@ -5,8 +5,6 @@ import ch.dc.Router;
 import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
 import ch.dc.viewModels.FileEntry;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.MapChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -19,13 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Function;
 
 public class AudioPlayerController {
     private final static String viewName = "AudioPlayer";

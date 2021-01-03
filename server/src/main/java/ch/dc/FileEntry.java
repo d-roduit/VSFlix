@@ -1,3 +1,5 @@
+package main.java.ch.dc;
+
 import java.io.File;
 
 public class FileEntry {

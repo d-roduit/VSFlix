@@ -5,8 +5,6 @@ import ch.dc.Router;
 import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
 import ch.dc.viewModels.FileEntry;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -17,13 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaView;
-import javafx.scene.media.Track;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
 
 public class VideoPlayerController {
     private final static String viewName = "VideoPlayer";

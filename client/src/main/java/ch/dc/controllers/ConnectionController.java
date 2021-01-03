@@ -1,13 +1,23 @@
 package ch.dc.controllers;
 
 import ch.dc.Client;
+import ch.dc.Command;
 import ch.dc.Router;
+import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ConnectionController {
 
@@ -15,15 +25,22 @@ public class ConnectionController {
 
     private final Router router = Router.getInstance();
     private final ClientModel clientModel = ClientModel.getInstance();
+    private final ClientHttpServerModel clientHttpServerModel = ClientHttpServerModel.getInstance();
+
+    @FXML
+    private Label serverAddressLabel;
+
+    @FXML
+    private Label serverPortLabel;
+
+    @FXML
+    private TextField serverAddressTextField;
+
+    @FXML
+    private TextField serverPortTextField;
 
     @FXML
     private Button connectButton;
-
-    @FXML   
-    private TextField ipAddressTextField;
-
-    @FXML
-    private TextField portNumberTextField;
 
 
     @FXML
@@ -31,36 +48,41 @@ public class ConnectionController {
         router.setCurrentRoute(viewName);
 
         connectButton.setOnAction(actionEvent -> {
-            try {
-                connectToServer();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            connectToServer();
         });
+
+        serverPortLabel.setOnMouseClicked(mouseEvent -> serverPortTextField.requestFocus());
+        serverAddressLabel.setOnMouseClicked(mouseEvent -> serverAddressTextField.requestFocus());
     }
 
     @FXML
-    private void connectToServer() throws IOException {
-//        String ipAddress = ipAddressTextField.getText();
-//        int portNumber = Integer.parseInt(portNumberTextField.getText());
-//
-//        Socket clientSocket = new Socket(InetAddress.getByName(ipAddress), portNumber);
+    private void connectToServer() {
+        String serverAddressText = serverAddressTextField.getText();
+        int serverPortText = Integer.parseInt(serverPortTextField.getText());
 
-        Client.setRoot("Layout");
+        try {
+            InetAddress serverAddress = InetAddress.getByName(serverAddressText);
+
+            Socket clientSocket = new Socket(serverAddress, serverPortText);
+
+            BufferedReader bIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter pOut = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            clientModel.setClientSocket(clientSocket);
+            clientModel.setBIn(bIn);
+            clientModel.setPOut(pOut);
+
+            pOut.println(Command.HTTPPORT.value + " " + clientHttpServerModel.getPort());
+
+            Client.setRoot("Layout");
+        } catch (IOException ioException) {
+            // TODO: Log
+            ioException.printStackTrace();
+        }
     }
 
-//    @FXML
-//    private void switchToSecondary() throws IOException {
-//        Client.setRoot("Secondary");
-//    }
-
-    @FXML
-    private void focusIpAddressTextField() {
-        ipAddressTextField.requestFocus();
-    }
-
-    @FXML
-    private void focusPortNumberTextField() {
-        portNumberTextField.requestFocus();
+    private Label createErrorLabel(String errorMessage) {
+//        connectionErrorLabel
+    return new Label();
     }
 }

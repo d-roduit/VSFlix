@@ -1,7 +1,9 @@
 package ch.dc.controllers;
 
 import ch.dc.Client;
+import ch.dc.Command;
 import ch.dc.Router;
+import ch.dc.models.ClientModel;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -9,9 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LayoutController {
 
+    private final ClientModel clientModel = ClientModel.getInstance();
     private final Router router = Router.getInstance();
 
     private Task<Parent> loadView;
@@ -154,7 +158,8 @@ public class LayoutController {
         }
 
         // TODO: Disconnect from server
-
+        PrintWriter pOut = clientModel.getPOut();
+        pOut.println(Command.DISCONNECT.value);
 
         // Display the Connection view
         loadView = new Task<Parent>() {

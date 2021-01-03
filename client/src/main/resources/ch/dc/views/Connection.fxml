@@ -7,21 +7,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
+<?import ch.dc.FontAwesomeIcon?>
 <VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.dc.controllers.ConnectionController">
     <ImageView pickOnBounds="true" preserveRatio="true" fitWidth="230">
         <Image url="@../assets/images/vsflix.png"/>
     </ImageView>
-    <Text id="serverAddress">Server Address</Text>
+    <Text id="serverAddressText">Server Address</Text>
     <HBox id="fieldsHbox">
         <VBox styleClass="fieldVbox">
-            <Label text="IP Address" onMouseClicked="#focusIpAddressTextField"/>
-            <TextField id="ipAddressTextField" fx:id="ipAddressTextField" text="127.0.0.1"/>
+            <Label fx:id="serverAddressLabel" text="IP Address"/>
+            <TextField fx:id="serverAddressTextField" id="serverAddressTextField" text="127.0.0.1"/>
         </VBox>
         <VBox styleClass="fieldVbox">
-            <Label text="Port" onMouseClicked="#focusPortNumberTextField"/>
-            <TextField id="portNumberTextField" fx:id="portNumberTextField" text="45000"/>
+            <Label fx:id="serverPortLabel" text="Port"/>
+            <TextField fx:id="serverPortTextField" id="serverPortTextField" text="45000"/>
         </VBox>
     </HBox>
+    <Label id="connectionError">
+<!--        <graphic>-->
+<!--            <FontAwesomeIcon icon="EXCLAMATION_TRIANGLE" />-->
+<!--        </graphic>-->
+<!--        Connection refused : Verify server address-->
+    </Label>
     <Button id="connectButton" fx:id="connectButton">CONNECT</Button>
 
     <stylesheets>

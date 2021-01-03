@@ -5,7 +5,7 @@
     -fx-spacing: 45px;
 }
 
-#serverAddress {
+#serverAddressText {
     -fx-fill: #E6E6E6;
     -fx-font-size: 27px;
     -fx-font-weight: bold;
@@ -23,7 +23,6 @@
 Label {
     -fx-text-fill: #BEBEBE;
     -fx-font-size: 14px;
-    -fx-cursor: hand;
 }
 
 TextField {
@@ -32,14 +31,37 @@ TextField {
     -fx-text-fill: white;
     -fx-font-size: 15px;
 }
+#serverAddressLabel,
+#serverPortLabel {
+    -fx-cursor: hand;
+}
 
-#ipAddressTextField {
+#serverAddressTextField {
     -fx-background-radius: 5px 0px 0px 0px;
 }
 
-#portNumberTextField {
+#serverPortTextField {
     -fx-pref-width: 90px;
     -fx-background-radius: 0px 5px 0px 0px;
+}
+
+#connectionError {
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-text-fill:  black;
+    -fx-padding: 8px 25px;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 3px;
+    -fx-background-color: #f2efe6;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+}
+
+#connectionError FontAwesomeIcon {
+    -fx-text-fill: #E50913;
+    -fx-font-size: 16px;
+    -fx-padding: 0px 5px 0px 0px;
 }
 
 #connectButton {
@@ -48,4 +70,8 @@ TextField {
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-cursor: hand;
+}
+
+#connectButton:hover {
+    -fx-background-color: #b3070e;
 }

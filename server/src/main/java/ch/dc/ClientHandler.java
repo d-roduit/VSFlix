@@ -1,3 +1,5 @@
+package main.java.ch.dc;
+
 import java.io.*;
 import java.net.SocketException;
 import java.util.ArrayList;

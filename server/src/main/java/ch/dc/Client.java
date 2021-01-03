@@ -1,3 +1,5 @@
+package main.java.ch.dc;
+
 import java.io.File;
 import java.net.InetAddress;
 import java.net.Socket;

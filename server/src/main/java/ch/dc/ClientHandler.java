@@ -5,14 +5,34 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * <b>ClientHandler is the class that handles the thread of a client connection.</b>
+ */
 public class ClientHandler extends Thread {
 
+    /**
+     * The server.
+     */
     private final Server server;
+
+    /**
+     * The client.
+     */
     private final Client client;
+
+    /**
+     * The BufferedReader.
+     */
     private final BufferedReader bIn;
+
+    /**
+     * The PrintWriter.
+     */
     private final PrintWriter pOut;
 
+    /**
+     * The command enumeration.
+     */
     private enum Command {
         HTTPPORT,
         GETALLFILES,
@@ -22,7 +42,16 @@ public class ClientHandler extends Thread {
         DISCONNECT
     }
 
-    //Constructor
+    /**
+     * ClientHandler constructor.
+     *
+     * @param server
+     *              The server.
+     * @param client
+     *              The client.
+     *
+     * @throws IOException
+     */
     public ClientHandler(Server server, Client client) throws IOException {
         this.server = server;
         this.client = client;

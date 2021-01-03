@@ -17,9 +17,9 @@
     </top>
     <center>
         <HBox id="mediaContentBox">
-            <VBox id="mediaContentInnerBox">
+            <VBox fx:id="mediaContentInnerBox" id="mediaContentInnerBox">
                 <HBox id="videoTitleBox">
-                    <Label fx:id="videoTitle" id="videoTitle">Lacalin.mp4</Label>
+                    <Label fx:id="videoTitle" id="videoTitle" />
                 </HBox>
                 <MediaView fx:id="mediaView" id="mediaView" />
             </VBox>

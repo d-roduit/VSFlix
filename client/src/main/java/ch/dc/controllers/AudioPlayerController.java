@@ -2,6 +2,7 @@ package ch.dc.controllers;
 
 import ch.dc.Client;
 import ch.dc.Router;
+import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
 import ch.dc.viewModels.FileEntry;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,15 +18,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 public class AudioPlayerController {
     private final static String viewName = "AudioPlayer";
 
     private final Router router = Router.getInstance();
     private final ClientModel clientModel = ClientModel.getInstance();
+    private final ClientHttpServerModel clientHttpServerModel = ClientHttpServerModel.getInstance();
 
     private Media media;
 
@@ -63,17 +70,28 @@ public class AudioPlayerController {
 
         FileEntry fileToPlay = clientModel.getFileToPlay();
         String fileName = fileToPlay.getFile().getName();
+        String filePath = URLEncoder.encode(fileToPlay.getFile().getPath(), StandardCharsets.UTF_8).replace("+", "%20");
 
-//        String mediaSourcePath = "http://127.0.0.1/cassius.mp3";
-        String mediaSourcePath = fileName.replace(" ", "%20");
-        mediaSourcePath = "http://127.0.0.1/VSFlix%20Samples/Audio/" + mediaSourcePath;
+        String httpServerContextPath = clientHttpServerModel.getContextPath();
+        int httpServerPort = clientHttpServerModel.getPort();
+
+        String mediaSourcePath = "http://127.0.0.1:" + httpServerPort + httpServerContextPath + filePath;
 
         artistLabel.setVisible(false);
         artistLabel.setManaged(false);
 
         titleLabel.setText(fileName);
 
-        Media media = new Media(mediaSourcePath);
+        media = new Media(mediaSourcePath);
+
+        media.setOnError(() -> {
+            // TODO: Log Error
+
+            artistLabel.setVisible(false);
+            artistLabel.setManaged(false);
+
+            handleMediaError(media.getError().getType());
+        });
 
         media.getMetadata().addListener((MapChangeListener<? super String, ? super Object>) (change) -> {
             if (change.wasAdded()) {
@@ -82,6 +100,10 @@ public class AudioPlayerController {
         });
 
         playerViewController.initializePlayer(media, mediaView);
+
+        playerViewController.mediaPlayer.setOnError(() -> {
+            handleMediaError(playerViewController.mediaPlayer.getError().getType());
+        });
 
         mediaView.setVisible(false);
         mediaView.setManaged(false);
@@ -110,6 +132,45 @@ public class AudioPlayerController {
         }
     }
 
+    private void handleMediaError(MediaException.Type mediaExceptionType) {
+        StringBuilder errorMessage = new StringBuilder("Media Error : ");
+
+        switch (mediaExceptionType) {
+            case MEDIA_CORRUPTED:
+                errorMessage.append("Media corrupted");
+                break;
+            case MEDIA_INACCESSIBLE:
+                errorMessage.append("Media inaccessible");
+                break;
+            case MEDIA_UNAVAILABLE:
+                errorMessage.append("Media unavailable");
+                break;
+            case MEDIA_UNSUPPORTED:
+                errorMessage.append("Media unsupported");
+                break;
+            case MEDIA_UNSPECIFIED:
+                errorMessage.append("Media unspecified");
+                break;
+            case UNKNOWN:
+                errorMessage.append("Media invalid");
+                break;
+            case OPERATION_UNSUPPORTED:
+                errorMessage.append("Operation unsupported");
+                break;
+            case PLAYBACK_ERROR:
+                errorMessage.append("Playback error");
+                break;
+            case PLAYBACK_HALTED:
+                errorMessage.append("Playback halted");
+                break;
+        }
+
+        System.err.println(errorMessage);
+
+        // TODO: Log Error
+        titleLabel.setText(errorMessage.toString());
+    }
+
     private void displayLayoutView() {
         Task<Parent> loadView = new Task<Parent>() {
             @Override
@@ -117,11 +178,8 @@ public class AudioPlayerController {
                 // If the previous route was a composed view,
                 // request the same composed view when going back.
                 String[] previousRoute = router.getPreviousRoute();
-                for (String route: previousRoute) {
-                    System.out.println(route);
-                }
+
                 if (router.isComposedRoute(previousRoute)) {
-                    System.out.println("is composed");
                     router.requestNextRoutePartialView(previousRoute[1]);
                 }
 
@@ -143,6 +201,7 @@ public class AudioPlayerController {
                 if (playerViewController != null) {
                     if (playerViewController.mediaPlayer != null) {
                         playerViewController.mediaPlayer.stop();
+                        playerViewController.mediaPlayer.dispose();
                     }
                 }
 

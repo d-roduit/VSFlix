@@ -33,12 +33,9 @@ public class LayoutController {
         String partialViewToLoad = "AllFiles";
 
         if (router.hasPartialViewRequested()) {
-            System.out.println("has partial view requested");
-
             String partialViewRequested = router.getPartialViewRequested();
 
-            System.out.println("partialViewRequested : " + partialViewRequested);
-            System.out.println("partialViewRequested (2nd time) : " + router.getPartialViewRequested());
+            // TODO: Log has partial view requested : partialView value
 
             if (partialViewRequested.equals("MyFiles")) {
                 partialViewToLoad = partialViewRequested;

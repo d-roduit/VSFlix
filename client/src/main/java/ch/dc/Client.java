@@ -10,18 +10,25 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * JavaFX Client App
  */
 public class Client extends Application {
 
+    public static ClientHttpServer clientHttpServer;
     public static Stage stage;
     public static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
         Client.stage = stage;
+
+        stage.setOnCloseRequest(windowEvent -> clientHttpServer.stop());
+
         scene = new Scene(loadFXML("Connection"));
 
         Font fontawesomeFont = Font.loadFont(Client.class.getResourceAsStream("assets/fonts/Font-Awesome-5-Free-Solid-900.otf"), 13);
@@ -46,8 +53,6 @@ public class Client extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
+    public static void main(String[] args) { launch(); }
 
 }

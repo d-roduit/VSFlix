@@ -59,11 +59,6 @@ public class PlayerController {
         this.mediaSourcePath = media.getSource();
         this.mediaView = mediaView;
 
-        media.setOnError(() -> {
-            // TODO: Log Error
-            System.out.println("Error : " + media.getError().toString());
-        });
-
         mediaPlayer = new MediaPlayer(media);
 
         mediaPlayer.setAutoPlay(true);
@@ -84,24 +79,10 @@ public class PlayerController {
         mediaPlayer.setOnPaused(() -> playOrPauseIcon.setIcon(FontAwesome.PLAY));
         mediaPlayer.setOnStopped(() -> playOrPauseIcon.setIcon(FontAwesome.PLAY));
 
-        mediaPlayer.setOnEndOfMedia(() -> {
-            mediaPlayer.stop();
-
-            System.out.println(mediaPlayer.getStatus());
-            // TODO: Log END OF MEDIA
-        });
-
-        mediaPlayer.setOnError(() -> {
-            // TODO: Log Error
-            System.out.println("Error : " + mediaPlayer.getError().toString());
-        });
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.stop());
 
         mediaView.setMediaPlayer(mediaPlayer);
         mediaView.setOnMouseClicked(mouseEvent -> playOrPause());
-        mediaView.setOnError(mediaErrorEvent -> {
-            // TODO: Log Error
-            System.out.println("Error : " + mediaErrorEvent.getMediaError().toString());
-        });
 
         mediaProgressBar.valueProperty().addListener((observable, oldValue, newValue) -> {
             String newStyle = String.format(Locale.ROOT, "-mediaProgressBar-filled-track-color: " +

@@ -1,23 +1,18 @@
 package ch.dc.controllers;
 
-import ch.dc.Client;
-import ch.dc.Command;
-import ch.dc.Router;
+import ch.dc.*;
 import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ConnectException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class ConnectionController {
 
@@ -40,12 +35,18 @@ public class ConnectionController {
     private TextField serverPortTextField;
 
     @FXML
+    private HBox connectionErrorBox;
+
+    @FXML
     private Button connectButton;
 
 
     @FXML
     public void initialize() {
         router.setCurrentRoute(viewName);
+
+        connectionErrorBox.setVisible(false);
+        connectionErrorBox.setManaged(false);
 
         connectButton.setOnAction(actionEvent -> {
             connectToServer();
@@ -55,34 +56,71 @@ public class ConnectionController {
         serverAddressLabel.setOnMouseClicked(mouseEvent -> serverAddressTextField.requestFocus());
     }
 
-    @FXML
     private void connectToServer() {
-        String serverAddressText = serverAddressTextField.getText();
-        int serverPortText = Integer.parseInt(serverPortTextField.getText());
+        Task<Socket> connection = new Task<Socket>() {
+            @Override
+            public Socket call() throws IOException {
+                String serverAddressText = serverAddressTextField.getText();
+                int serverPortText = Integer.parseInt(serverPortTextField.getText());
 
-        try {
-            InetAddress serverAddress = InetAddress.getByName(serverAddressText);
+                System.out.println(serverAddressText);
 
-            Socket clientSocket = new Socket(serverAddress, serverPortText);
+                InetAddress serverAddress = InetAddress.getByName(serverAddressText);
 
-            BufferedReader bIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter pOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                System.out.println(serverAddress.getHostAddress());
 
-            clientModel.setClientSocket(clientSocket);
-            clientModel.setBIn(bIn);
-            clientModel.setPOut(pOut);
+                Socket clientSocket = new Socket(serverAddress, serverPortText);
 
-            pOut.println(Command.HTTPPORT.value + " " + clientHttpServerModel.getPort());
+                return clientSocket;
+            }
+        };
 
-            Client.setRoot("Layout");
-        } catch (IOException ioException) {
+        connection.setOnSucceeded(e -> {
+            try {
+                Socket clientSocket = connection.getValue();
+
+                InputStream inputStream = clientSocket.getInputStream();
+                OutputStream outputStream = clientSocket.getOutputStream();
+
+                ObjectOutputStream objOut = new ObjectOutputStream(outputStream);
+                ObjectInputStream objIn = new ObjectInputStream(inputStream);
+
+                clientModel.setClientSocket(clientSocket);
+                clientModel.setObjIn(objIn);
+                clientModel.setObjOut(objOut);
+
+                objOut.writeUTF(Command.HTTPPORT.value + " " + clientHttpServerModel.getPort());
+                objOut.flush();
+
+                String httpStatus = objIn.readUTF();
+                //TODO: Log
+                System.out.println("httpStatus : " + httpStatus);
+
+                Client.setRoot("Layout");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
+        connection.setOnFailed(e -> {
             // TODO: Log
-            ioException.printStackTrace();
-        }
+            connectionErrorBox.setVisible(true);
+            connectionErrorBox.setManaged(true);
+            Label errorLabel = createErrorLabel("Connection refused : Verify server address");
+            connectionErrorBox.getChildren().clear();
+            connectionErrorBox.getChildren().add(errorLabel);
+        });
+
+        Thread thread = new Thread(connection);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private Label createErrorLabel(String errorMessage) {
-//        connectionErrorLabel
-    return new Label();
+        Label errorLabel = new Label(errorMessage);
+        errorLabel.setId("connectionError");
+        errorLabel.setGraphic(new FontAwesomeIcon(FontAwesome.EXCLAMATION_TRIANGLE));
+
+        return errorLabel;
     }
 }

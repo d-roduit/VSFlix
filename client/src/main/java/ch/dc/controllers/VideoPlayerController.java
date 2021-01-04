@@ -4,7 +4,7 @@ import ch.dc.Client;
 import ch.dc.Router;
 import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
-import ch.dc.viewModels.FileEntry;
+import ch.dc.FileEntry;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -57,11 +57,11 @@ public class VideoPlayerController {
         FileEntry fileToPlay = clientModel.getFileToPlay();
         String fileName = fileToPlay.getFile().getName();
         String filePath = URLEncoder.encode(fileToPlay.getFile().getPath(), StandardCharsets.UTF_8).replace("+", "%20");
+        String clientIpAddress = fileToPlay.getClientIp();
+        String clientHttpServerContextPath = clientHttpServerModel.getContextPath();
+        int clientHttpServerPort = clientHttpServerModel.getPort();
 
-        String httpServerContextPath = clientHttpServerModel.getContextPath();
-        int httpServerPort = clientHttpServerModel.getPort();
-
-        String mediaSourcePath = "http://127.0.0.1:" + httpServerPort + httpServerContextPath + filePath;
+        String mediaSourcePath = "http://" + clientIpAddress + ":" + clientHttpServerPort + clientHttpServerContextPath + filePath;
 
         media = new Media(mediaSourcePath);
 
@@ -70,7 +70,7 @@ public class VideoPlayerController {
             handleMediaError(media.getError().getType());
         });
 
-        videoTitle.setText(fileToPlay.getFile().getName());
+        videoTitle.setText(fileName);
 
         playerViewController.initializePlayer(media, mediaView);
 

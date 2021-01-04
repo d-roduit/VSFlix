@@ -1,6 +1,9 @@
-package main.java.ch.dc;
+package ch.dc;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,24 +26,12 @@ public class ClientHandler extends Thread {
     /**
      * The BufferedReader.
      */
-    private final BufferedReader bIn;
+    private final ObjectInputStream objIn;
 
     /**
      * The PrintWriter.
      */
-    private final PrintWriter pOut;
-
-    /**
-     * The command enumeration.
-     */
-    private enum Command {
-        HTTPPORT,
-        GETALLFILES,
-        ADDFILE,
-        UNSHAREFILE,
-        GETCONNECTEDCLIENTS,
-        DISCONNECT
-    }
+    private final ObjectOutputStream objOut;
 
     /**
      * ClientHandler constructor.
@@ -55,8 +46,8 @@ public class ClientHandler extends Thread {
     public ClientHandler(Server server, Client client) throws IOException {
         this.server = server;
         this.client = client;
-        this.bIn = new BufferedReader(new InputStreamReader(client.getSocket().getInputStream()));
-        this.pOut = new PrintWriter(client.getSocket().getOutputStream());
+        this.objOut = new ObjectOutputStream(client.getSocket().getOutputStream());
+        this.objIn = new ObjectInputStream(client.getSocket().getInputStream());
     }
 
     //overwrite the thread run()
@@ -66,10 +57,7 @@ public class ClientHandler extends Thread {
         boolean disconnect = false;
         while (!disconnect) {
             try {
-                pOut.println("What is your request ? Type DISCONNECT to terminate connection.");
-                pOut.flush();
-
-                messageReceived = bIn.readLine();
+                messageReceived = objIn.readUTF();
 
                 String[] msgArray = messageReceived.split(" ");
                 System.out.println("Client (" + client.getIp() + ":" + client.getExchangingPort() + ") request : " + messageReceived);
@@ -79,40 +67,49 @@ public class ClientHandler extends Thread {
                         int clientHttpPort = Integer.parseInt(msgArray[1]);
                         System.out.println("Http port : " + clientHttpPort);
                         client.setHttpPort(clientHttpPort);
-                        pOut.println("Http port set.");
-                        pOut.flush();
+                        objOut.writeUTF("HTTPPORT OK");
+                        objOut.flush();
                         break;
                     case GETALLFILES:
-                        pOut.println(getAllFiles());
-                        pOut.flush();
+                        objOut.writeObject(getAllFiles());
+                        objOut.flush();
                         break;
                     case ADDFILE:
-                        System.out.println("Add a file");
-                        File file = new File(msgArray[1]);
-                        try{
-                            FileType fileType = FileType.valueOf(msgArray[2]);
-                            client.addFile(file, fileType);
-                            pOut.println("File was added.");
-                        }catch (Exception e){
-                            pOut.println("Invalid input.");
+                        System.out.println("Add file.");
+                        try {
+                            FileEntry fileEntry = (FileEntry) objIn.readObject();
+                            client.addFileEntry(fileEntry);
+                            objOut.writeUTF("ADDFILE OK");
+                        } catch (ClassNotFoundException e) {
+                            // TODO: Log
+                            objOut.writeUTF("ADDFILE KO");
+                            e.printStackTrace();
                         }
-                        pOut.flush();
+                        objOut.flush();
+
+//                        for (Client client: server.getClients()) {
+//                            if (!client.equals(this.client)) {
+//                                ObjectOutputStream clientObjOut = new ObjectOutputStream(client.getSocket().getOutputStream());
+//                                clientObjOut.writeUTF(Command.UPDATEALLFILES.value);
+//                            }
+//                        }
                         break;
                     case UNSHAREFILE:
-                        System.out.println("Remove a file");
-                        File fileToUnshare = new File(msgArray[1]);
-                        try{
-                            FileType filetype = FileType.valueOf(msgArray[2]);
-                            client.unshareFile(fileToUnshare, filetype);
-                            pOut.println("File was removed.");
-                        }catch (Exception e){
-                            pOut.println("Invalid input");
+                        System.out.println("Remove a file.");
+                        try {
+                            FileEntry fileEntry = (FileEntry) objIn.readObject();
+                            client.removeFileEntry(fileEntry);
+                            objOut.writeUTF("UNSHAREFILE OK");
+                        } catch (ClassNotFoundException e) {
+                            // TODO: Log
+                            objOut.writeUTF("UNSHAREFILE KO");
+                            e.printStackTrace();
                         }
-                        pOut.flush();
+                        objOut.flush();
                         break;
                     case GETCONNECTEDCLIENTS:
-                        pOut.println(getConnectedClients());
-                        pOut.flush();
+                        objOut.writeUTF(getConnectedClients());
+                        objOut.flush();
                         break;
                     case DISCONNECT:
                         System.out.println("Client (" + client.getIp() + ":" + client.getExchangingPort() + ") disconnect... Closing this connection.");
@@ -120,8 +117,8 @@ public class ClientHandler extends Thread {
                         disconnect = true;
                         break;
                     default:
-                        pOut.println("Invalid input");
-                        pOut.flush();
+                        objOut.writeUTF("INVALID INPUT");
+                        objOut.flush();
                 }
             }catch (SocketException se) {
                 server.getClients().remove(client);
@@ -134,9 +131,9 @@ public class ClientHandler extends Thread {
 
         try {
             client.getSocket().close();
-            System.out.println("Connection closed");
-            bIn.close();
-            pOut.close();
+            System.out.println("Connection closed.");
+            objIn.close();
+            objOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,25 +157,16 @@ public class ClientHandler extends Thread {
         return connectedClientsString.toString();
     }
 
-    private String getAllFiles() {
+    private List<FileEntry> getAllFiles() {
         List<FileEntry> allFiles = new ArrayList<>();
-        StringBuilder allFilesString = new StringBuilder();
-        allFilesString.append("------------------------------------------");
-//        allFilesString.append(System.getProperty("line.separator"));
-        allFilesString.append("All files shared :");
-//        allFilesString.append(System.getProperty("line.separator"));
+
         for (Client client: server.getClients()) {
             if (!client.equals(this.client)) {
                 allFiles.addAll(client.getFiles());
             }
         }
-        for(FileEntry fileEntry: allFiles) {
-            allFilesString.append("- " + fileEntry.getFile().getName() + " (type : " + fileEntry.getFileType() + ")");
-//                allFilesString.append(System.getProperty("line.separator"));
-        }
-        allFilesString.append("------------------------------------------");
 
-        return allFilesString.toString();
+        return allFiles;
     }
 
 }

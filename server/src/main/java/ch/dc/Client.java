@@ -1,4 +1,4 @@
-package main.java.ch.dc;
+package ch.dc;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -112,39 +112,27 @@ public class Client {
     }
 
     /**
-     * Add a file to the client files list.
+     * Add a fileEntry to the client files list.
      *
-     * @param file
-     *              The file to add.
-     * @param fileType
-     *              The file type.
+     * @param fileEntry
+     *              The fileEntry.
      *
-     * @see FileType
      * @see FileEntry
      */
-    public void addFile(File file, FileType fileType) {
-        FileEntry fileEntry = new FileEntry(file, fileType, getIp(), getHttpPort());
+    public void addFileEntry(FileEntry fileEntry) {
         files.add(fileEntry);
     }
 
     /**
-     * Remove a file from the client files list.
+     * Remove a fileEntry from the client files list.
      *
-     * @param file
-     *              The file to remove.
-     * @param fileType
-     *              The file type.
+     * @param fileEntry
+     *              The fileEntry to remove.
      *
-     * @see FileType
      * @see FileEntry
      */
-    public void unshareFile(File file, FileType fileType) {
-        for (Iterator<FileEntry> iter = files.listIterator(); iter.hasNext(); ) {
-            FileEntry fileEntry = iter.next();
-            if(fileEntry.getFile().equals(file) && fileEntry.getFileType().equals(fileType)){
-                files.remove(fileEntry);
-            }
-        }
+    public void removeFileEntry(FileEntry fileEntry) {
+        files.remove(fileEntry);
     }
 
     /**

@@ -12,6 +12,8 @@ public class ClientHttpServerModel {
 
     public static ClientHttpServerModel getInstance() { return INSTANCE; }
 
+    public String getIp() { return "127.0.0.1"; }
+
     public int getPort() { return port; }
     public void setPort(int port) { this.port = port; }
 

@@ -1,10 +1,10 @@
 package ch.dc.controllers;
 
 import ch.dc.Client;
+import ch.dc.FileEntry;
 import ch.dc.Router;
 import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
-import ch.dc.viewModels.FileEntry;
 import javafx.collections.MapChangeListener;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -67,11 +67,11 @@ public class AudioPlayerController {
         FileEntry fileToPlay = clientModel.getFileToPlay();
         String fileName = fileToPlay.getFile().getName();
         String filePath = URLEncoder.encode(fileToPlay.getFile().getPath(), StandardCharsets.UTF_8).replace("+", "%20");
+        String clientIpAddress = fileToPlay.getClientIp();
+        String clientHttpServerContextPath = clientHttpServerModel.getContextPath();
+        int clientHttpServerPort = clientHttpServerModel.getPort();
 
-        String httpServerContextPath = clientHttpServerModel.getContextPath();
-        int httpServerPort = clientHttpServerModel.getPort();
-
-        String mediaSourcePath = "http://127.0.0.1:" + httpServerPort + httpServerContextPath + filePath;
+        String mediaSourcePath = "http://" + clientIpAddress + ":" + clientHttpServerPort + clientHttpServerContextPath + filePath;
 
         artistLabel.setVisible(false);
         artistLabel.setManaged(false);

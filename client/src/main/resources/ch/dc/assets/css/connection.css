@@ -45,6 +45,11 @@ TextField {
     -fx-background-radius: 0px 5px 0px 0px;
 }
 
+#connectionErrorBox {
+    -fx-alignment: center;
+    -fx-padding: 0px;
+}
+
 #connectionError {
     -fx-font-size: 14px;
     -fx-alignment: center;

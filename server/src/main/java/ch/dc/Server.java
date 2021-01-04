@@ -1,5 +1,4 @@
-package main.java.ch.dc;
-
+package ch.dc;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;

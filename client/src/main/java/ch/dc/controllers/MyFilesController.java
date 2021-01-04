@@ -1,8 +1,8 @@
 package ch.dc.controllers;
 
 import ch.dc.*;
+import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
-import ch.dc.viewModels.FileEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.concurrent.Task;
@@ -27,6 +27,7 @@ public class MyFilesController {
     private Task<Parent> loadView;
 
     private final ClientModel clientModel = ClientModel.getInstance();
+    private final ClientHttpServerModel clientHttpServerModel = ClientHttpServerModel.getInstance();
     private final ObservableMap<BorderPane, File> myAudioFilesMap = FXCollections.observableMap(new HashMap<>());
     private final ObservableMap<BorderPane, File> myVideoFilesMap = FXCollections.observableMap(new HashMap<>());
 
@@ -54,6 +55,9 @@ public class MyFilesController {
     }
 
     private void addFile(FileType fileType) {
+        String clientHttpServerIp = clientHttpServerModel.getIp();
+        int clientHttpServerPort = clientHttpServerModel.getPort();
+
         switch (fileType) {
             case AUDIO:
                 File audioFile = getFileWitFileChooser(
@@ -62,9 +66,14 @@ public class MyFilesController {
                 );
 
                 if (audioFile != null) {
-                    FileEntry fileEntry = new FileEntry(audioFile, fileType);
-                    clientModel.getMyAudioFiles().add(fileEntry);
-                    drawFilesEntries(FileType.AUDIO);
+                    FileEntry fileEntry = new FileEntry(
+                            audioFile,
+                            fileType,
+                            clientHttpServerIp,
+                            clientHttpServerPort
+                    );
+
+                    addFileOnServer(fileEntry);
                 }
                 break;
 
@@ -75,30 +84,129 @@ public class MyFilesController {
                 );
 
                 if (videoFile != null) {
-                    FileEntry fileEntry = new FileEntry(videoFile, fileType);
-                    clientModel.getMyVideoFiles().add(fileEntry);
-                    drawFilesEntries(FileType.VIDEO);
+                    FileEntry fileEntry = new FileEntry(
+                            videoFile,
+                            fileType,
+                            clientHttpServerIp,
+                            clientHttpServerPort
+                    );
+
+                    addFileOnServer(fileEntry);
                 }
                 break;
         }
+    }
+
+    private void addFileOnClient(FileEntry fileEntry) {
+        FileType fileType = fileEntry.getFileType();
+
+        switch (fileType) {
+            case AUDIO:
+                clientModel.getMyAudioFiles().add(fileEntry);
+                break;
+
+            case VIDEO:
+                clientModel.getMyVideoFiles().add(fileEntry);
+                break;
+        }
+
+        drawFilesEntries(fileType);
+    }
+
+    private void addFileOnServer(FileEntry fileEntry) {
+        Task<FileEntry> addFileOnServerTask = new Task<FileEntry>() {
+            @Override
+            public FileEntry call() throws IOException {
+            clientModel.getObjOut().writeUTF(Command.ADDFILE.value);
+            clientModel.getObjOut().flush();
+
+            clientModel.getObjOut().writeObject(fileEntry);
+            clientModel.getObjOut().flush();
+
+            String addFileStatus = clientModel.getObjIn().readUTF();
+
+            //TODO: Log
+            System.out.println("addFileStatus : " + addFileStatus);
+
+            return fileEntry;
+            }
+        };
+
+        addFileOnServerTask.setOnSucceeded(e -> {
+            FileEntry fileEntryReturned = addFileOnServerTask.getValue();
+
+            if (fileEntryReturned != null) {
+                addFileOnClient(fileEntryReturned);
+            }
+        });
+
+        addFileOnServerTask.setOnFailed(e -> {
+            // TODO: Log
+            addFileOnServerTask.getException().printStackTrace();
+        });
+
+        Thread thread = new Thread(addFileOnServerTask);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void unshareFileOnClient(FileEntry fileEntry) {
+        FileType fileType = fileEntry.getFileType();
+
+        switch (fileType) {
+            case AUDIO:
+                clientModel.getMyAudioFiles().remove(fileEntry);
+                break;
+            case VIDEO:
+                clientModel.getMyVideoFiles().remove(fileEntry);
+                break;
+        }
+
+        drawFilesEntries(fileType);
+    }
+
+    private void unshareFileOnServer(FileEntry fileEntry) {
+        Task<FileEntry> unshareFileOnServerTask = new Task<FileEntry>() {
+            @Override
+            public FileEntry call() throws IOException {
+            clientModel.getObjOut().writeUTF(Command.UNSHAREFILE.value);
+            clientModel.getObjOut().flush();
+
+            clientModel.getObjOut().writeObject(fileEntry);
+            clientModel.getObjOut().flush();
+
+            String unshareFileStatus = clientModel.getObjIn().readUTF();
+
+            //TODO: Log
+            System.out.println("unshareFileStatus : " + unshareFileStatus);
+
+            return fileEntry;
+            }
+        };
+
+        unshareFileOnServerTask.setOnSucceeded(e -> {
+            FileEntry fileEntryReturned = unshareFileOnServerTask.getValue();
+
+            if (fileEntryReturned != null) {
+                unshareFileOnClient(fileEntryReturned);
+            }
+        });
+
+        unshareFileOnServerTask.setOnFailed(e -> {
+            // TODO: Log
+            unshareFileOnServerTask.getException().printStackTrace();
+        });
+
+        Thread thread = new Thread(unshareFileOnServerTask);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void unshareFile(FileEntry fileEntry) {
         boolean mustUnshare = askUnshareConfirmation(fileEntry.getFile().getName());
 
         if (mustUnshare) {
-            FileType fileType = fileEntry.getFileType();
-
-            switch (fileType) {
-                case AUDIO:
-                    clientModel.getMyAudioFiles().remove(fileEntry);
-                    break;
-                case VIDEO:
-                    clientModel.getMyVideoFiles().remove(fileEntry);
-                    break;
-            }
-
-            drawFilesEntries(fileType);
+            unshareFileOnServer(fileEntry);
         }
     }
 
@@ -111,8 +219,28 @@ public class MyFilesController {
         return fileChooser.showOpenDialog((Client.stage != null) ? Client.stage : null);
     }
 
-    private BorderPane createXMLFileEntry(FileEntry fileEntry) {
+    private void drawFilesEntries(FileType fileType) {
+        switch (fileType) {
+            case AUDIO:
+                audioFilesListBox.getChildren().clear();
 
+                for (FileEntry fileEntry : clientModel.getMyAudioFiles()) {
+                    BorderPane XMLEntry = createXMLFileEntry(fileEntry);
+                    audioFilesListBox.getChildren().add(XMLEntry);
+                }
+                break;
+            case VIDEO:
+                videoFilesListBox.getChildren().clear();
+
+                for (FileEntry fileEntry : clientModel.getMyVideoFiles()) {
+                    BorderPane XMLEntry = createXMLFileEntry(fileEntry);
+                    videoFilesListBox.getChildren().add(XMLEntry);
+                }
+                break;
+        }
+    }
+
+    private BorderPane createXMLFileEntry(FileEntry fileEntry) {
         BorderPane borderPane = new BorderPane();
 
         HBox fileTypeBox = new HBox();
@@ -174,27 +302,6 @@ public class MyFilesController {
         return icon;
     }
 
-    private void drawFilesEntries(FileType fileType) {
-        switch (fileType) {
-            case AUDIO:
-                audioFilesListBox.getChildren().clear();
-
-                for (FileEntry fileEntry : clientModel.getMyAudioFiles()) {
-                    BorderPane XMLEntry = createXMLFileEntry(fileEntry);
-                    audioFilesListBox.getChildren().add(XMLEntry);
-                }
-                break;
-            case VIDEO:
-                videoFilesListBox.getChildren().clear();
-
-                for (FileEntry fileEntry : clientModel.getMyVideoFiles()) {
-                    BorderPane XMLEntry = createXMLFileEntry(fileEntry);
-                    videoFilesListBox.getChildren().add(XMLEntry);
-                }
-                break;
-        }
-    }
-
     private boolean askUnshareConfirmation(String fileName) {
         boolean unshare = false;
 
@@ -251,7 +358,6 @@ public class MyFilesController {
 
             if (fxmlContent != null) {
                 Client.scene.setRoot(fxmlContent);
-//                resetScrollBar();
             }
         });
 
@@ -293,7 +399,6 @@ public class MyFilesController {
 
             if (fxmlContent != null) {
                 Client.scene.setRoot(fxmlContent);
-//                resetScrollBar();
             }
         });
 

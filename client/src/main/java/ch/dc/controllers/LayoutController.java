@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
 
 public class LayoutController {
 
@@ -158,8 +158,13 @@ public class LayoutController {
         }
 
         // TODO: Disconnect from server
-        PrintWriter pOut = clientModel.getPOut();
-        pOut.println(Command.DISCONNECT.value);
+        ObjectOutputStream objOut = clientModel.getObjOut();
+        try {
+            objOut.writeUTF(Command.DISCONNECT.value);
+            objOut.flush();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
 
         // Display the Connection view
         loadView = new Task<Parent>() {
@@ -180,6 +185,7 @@ public class LayoutController {
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
+                clearMyFiles();
                 Client.scene.setRoot(fxmlContent);
                 resetScrollBar();
             }
@@ -197,6 +203,11 @@ public class LayoutController {
         Thread thread = new Thread(loadView);
         thread.setDaemon(true);
         thread.start();
+    }
+
+    private void clearMyFiles() {
+        clientModel.getMyAudioFiles().clear();
+        clientModel.getMyVideoFiles().clear();
     }
 
     private void resetScrollBar() {

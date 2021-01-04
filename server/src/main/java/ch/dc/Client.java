@@ -1,15 +1,13 @@
 package ch.dc;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * <b>Client is the class that represents a client with its properties and methods.</b>
+ * <b>Client is the class that represents a client that connects to the server.</b>
  */
 public class Client {
 

@@ -1,6 +1,5 @@
 package ch.dc;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <b>ClientHandler is the class that handles the thread of a client connection.</b>
+ * <b>ClientHandler is the class that handles a client connection.</b>
+ * This class is instantiated by the server each time it receives a new connection.
  */
 public class ClientHandler extends Thread {
 
@@ -19,17 +19,17 @@ public class ClientHandler extends Thread {
     private final Server server;
 
     /**
-     * The client.
+     * The client the ClientHandler handles.
      */
     private final Client client;
 
     /**
-     * The BufferedReader.
+     * The ObjectInputStream used to communicate with the client.
      */
     private final ObjectInputStream objIn;
 
     /**
-     * The PrintWriter.
+     * The ObjectOutputStream used to communicate with the client.
      */
     private final ObjectOutputStream objOut;
 
@@ -50,7 +50,9 @@ public class ClientHandler extends Thread {
         this.objIn = new ObjectInputStream(client.getSocket().getInputStream());
     }
 
-    //overwrite the thread run()
+    /**
+     * Overwrite the run() method defined in the {@see Thread} class.
+     */
     @Override
     public void run() {
         String messageReceived;
@@ -141,6 +143,11 @@ public class ClientHandler extends Thread {
 
     }
 
+    /**
+     * Returns the list of connected clients.
+     *
+     * @see Client
+     */
     private String getConnectedClients() {
         StringBuilder connectedClientsString = new StringBuilder();
         connectedClientsString.append("------------------------------------------");
@@ -157,6 +164,11 @@ public class ClientHandler extends Thread {
         return connectedClientsString.toString();
     }
 
+    /**
+     * Returns the list of all shared files.
+     *
+     * @see FileEntry
+     */
     private List<FileEntry> getAllFiles() {
         List<FileEntry> allFiles = new ArrayList<>();
 

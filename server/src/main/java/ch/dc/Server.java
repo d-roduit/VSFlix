@@ -5,12 +5,34 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * <b>Server is the class that handles the files shared by the clients.</b>
+ * The server uses threads (via the {@see ClientHandler} class) to exchange commands with multiple clients at the same time.
+ */
 public class Server {
+    /**
+     * The clients connected.
+     */
     private List<Client> clients = new ArrayList<>();
+
+    /**
+     * The local address of the server.
+     */
     private InetAddress localAddress = null;
+
+    /**
+     * The socket the server uses to listen to new connections.
+     */
     private ServerSocket socketServer;
+
+    /**
+     * The interface name the server will use to determine its private IPv4 address.
+     */
     private String interfaceName = "wlan0";
 
+    /**
+     * Starts the server.
+     */
     public void start() {
 
         try {
@@ -35,7 +57,7 @@ public class Server {
             System.out.println("------------------------------------------");
 
             //infinite loop
-            while(true) {
+            while (true) {
                 Socket socket = null;
                 try {
                     socket = socketServer.accept();
@@ -70,6 +92,11 @@ public class Server {
 
     }
 
+    /**
+     * Returns the list of connected clients.
+     *
+     * @see Client
+     */
     public List<Client> getClients() {
         return clients;
     }

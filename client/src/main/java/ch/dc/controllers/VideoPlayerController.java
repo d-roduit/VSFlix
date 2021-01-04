@@ -29,6 +29,8 @@ public class VideoPlayerController {
 
     private Media media;
 
+    private Label errorLabel;
+
     @FXML
     private VBox mediaContentInnerBox;
 
@@ -61,7 +63,9 @@ public class VideoPlayerController {
         String clientHttpServerContextPath = clientHttpServerModel.getContextPath();
         int clientHttpServerPort = clientHttpServerModel.getPort();
 
+
         String mediaSourcePath = "http://" + clientIpAddress + ":" + clientHttpServerPort + clientHttpServerContextPath + filePath;
+        System.out.println("MEDIAPATH TO PLAY : " + mediaSourcePath);
 
         media = new Media(mediaSourcePath);
 
@@ -119,13 +123,15 @@ public class VideoPlayerController {
                 break;
         }
 
-        System.err.println(errorMessage);
-
-        Label errorLabel = new Label(errorMessage.toString());
-        errorLabel.setStyle("-fx-text-fill: white");
-
         // TODO: Log Error
-        mediaContentInnerBox.getChildren().add(errorLabel);
+
+        if (errorLabel == null) {
+            errorLabel = new Label(errorMessage.toString());
+            errorLabel.setId("errorLabel");
+            errorLabel.setStyle("-fx-text-fill: white");
+
+            mediaContentInnerBox.getChildren().add(errorLabel);
+        }
     }
 
     private void displayLayoutView() {

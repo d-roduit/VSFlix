@@ -4,31 +4,41 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * <b>Server is the class that handles the files shared by the clients.</b>
  * The server uses threads (via the {@see ClientHandler} class) to exchange commands with multiple clients at the same time.
  */
 public class Server {
+
+    /**
+     * The server logger.
+     */
+    public static Logger logger;
+
+    /**
+     * The port that the server listens to.
+     */
+    private int port = 45000;
+
     /**
      * The clients connected.
      */
     private List<Client> clients = new ArrayList<>();
 
     /**
-     * The local address of the server.
-     */
-    private InetAddress localAddress = null;
-
-    /**
      * The socket the server uses to listen to new connections.
      */
     private ServerSocket socketServer;
 
-    /**
-     * The interface name the server will use to determine its private IPv4 address.
-     */
-    private String interfaceName = "wlan0";
+    public Server() { }
+
+    public Server(int port) {
+        this.port = port;
+    }
 
     /**
      * Starts the server.
@@ -36,21 +46,10 @@ public class Server {
     public void start() {
 
         try {
+            logger.info("Server starts...");
+            logger.info("Server listening on 0.0.0.0:" + port);
 
-            NetworkInterface ni = NetworkInterface.getByName(interfaceName);
-            Enumeration<InetAddress> inetAddresses = ni.getInetAddresses();
-            while (inetAddresses.hasMoreElements()) {
-                InetAddress ia = inetAddresses.nextElement();
-
-                if (!ia.isLinkLocalAddress()) {
-                    if (!ia.isLoopbackAddress()) {
-                        System.out.println(ni.getName() + "->IP: " + ia.getHostAddress());
-                        localAddress = ia;
-                    }
-                }
-            }
-
-            socketServer = new ServerSocket(45000,0, localAddress);
+            socketServer = new ServerSocket(port,0);
 
             //wait for client connection
             System.out.println("Waiting for a client connection:");
@@ -59,6 +58,7 @@ public class Server {
             //infinite loop
             while (true) {
                 Socket socket = null;
+
                 try {
                     socket = socketServer.accept();
 
@@ -80,20 +80,16 @@ public class Server {
                     }
                     e.printStackTrace();
                 }
-
             }
-
-
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
      * Returns the list of connected clients.
+     *
+     * @return The list of connected clients.
      *
      * @see Client
      */

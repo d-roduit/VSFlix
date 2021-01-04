@@ -88,13 +88,6 @@ public class ClientHandler extends Thread {
                             e.printStackTrace();
                         }
                         objOut.flush();
-
-//                        for (Client client: server.getClients()) {
-//                            if (!client.equals(this.client)) {
-//                                ObjectOutputStream clientObjOut = new ObjectOutputStream(client.getSocket().getOutputStream());
-//                                clientObjOut.writeUTF(Command.UPDATEALLFILES.value);
-//                            }
-//                        }
                         break;
                     case UNSHAREFILE:
                         System.out.println("Remove a file.");
@@ -109,8 +102,8 @@ public class ClientHandler extends Thread {
                         }
                         objOut.flush();
                         break;
-                    case GETCONNECTEDCLIENTS:
-                        objOut.writeUTF(getConnectedClients());
+                    case GETNBCONNECTEDCLIENTS:
+                        objOut.writeInt(getNbConnectedClients());
                         objOut.flush();
                         break;
                     case DISCONNECT:
@@ -144,28 +137,20 @@ public class ClientHandler extends Thread {
     }
 
     /**
-     * Returns the list of connected clients.
+     * Returns the number of connected clients.
      *
-     * @see Client
+     * @return The number of connected clients.
+     *
+     * @see Server#getClients()
      */
-    private String getConnectedClients() {
-        StringBuilder connectedClientsString = new StringBuilder();
-        connectedClientsString.append("------------------------------------------");
-//        connectedClientsString.append(System.getProperty("line.separator"));
-        connectedClientsString.append("Client connected to the server :");
-//        connectedClientsString.append(System.getProperty("line.separator"));
-        for (Client client: server.getClients()) {
-            connectedClientsString.append("Client ip: " + client.getIp() + " exchanging port: " + client.getExchangingPort() +
-                    " http port : " + client.getHttpPort());
-//            connectedClientsString.append(System.getProperty("line.separator"));
-        }
-        connectedClientsString.append("------------------------------------------");
-
-        return connectedClientsString.toString();
+    private int getNbConnectedClients() {
+        return server.getClients().size();
     }
 
     /**
      * Returns the list of all shared files.
+     *
+     * @return The list of all shared files.
      *
      * @see FileEntry
      */

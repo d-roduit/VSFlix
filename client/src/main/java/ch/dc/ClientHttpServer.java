@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 public class ClientHttpServer {
 
@@ -24,6 +25,8 @@ public class ClientHttpServer {
             ioException.printStackTrace();
         }
     }
+
+    public static Logger logger;
 
     private final HttpServer server;
 

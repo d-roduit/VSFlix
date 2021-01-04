@@ -8,6 +8,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
@@ -33,6 +34,15 @@ public class LayoutController {
     public Button disconnectButton;
 
     @FXML
+    private Label serverAddressLabel;
+
+    @FXML
+    private Label serverPortLabel;
+
+    @FXML
+    private Label nbClientsConnectedLabel;
+
+    @FXML
     public void initialize() {
         String partialViewToLoad = "AllFiles";
 
@@ -55,15 +65,22 @@ public class LayoutController {
 
         allFilesButton.setOnAction(event -> {
             displayAllFilesView();
+            updateNbClientsConnected();
         });
 
         myFilesButton.setOnAction(event -> {
             displayMyFilesView();
+            updateNbClientsConnected();
         });
 
         disconnectButton.setOnAction(event -> {
             disconnectFromServer();
         });
+
+        serverAddressLabel.setText(clientModel.getServerAddress());
+        serverPortLabel.setText(String.valueOf(clientModel.getServerPort()));
+
+        updateNbClientsConnected();
     }
 
     private void displayAllFilesView() {
@@ -218,5 +235,40 @@ public class LayoutController {
     private void changeSelectedButton(Button oldSelectedButton, Button newSelectedButton) {
         oldSelectedButton.getStyleClass().removeAll("menuButtonSelected");
         newSelectedButton.getStyleClass().add("menuButtonSelected");
+    }
+
+    private void updateNbClientsConnected() {
+        Task<Integer> getNbConnectedClientsTask = new Task<>() {
+            @Override
+            public Integer call() {
+                int nbClientsConnected = 0;
+
+                try {
+                    clientModel.getObjOut().writeUTF(Command.GETNBCONNECTEDCLIENTS.value);
+                    clientModel.getObjOut().flush();
+
+                    nbClientsConnected = clientModel.getObjIn().readInt();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+                return nbClientsConnected;
+            }
+        };
+
+        getNbConnectedClientsTask.setOnSucceeded(e -> {
+            int nbClientsConnected = getNbConnectedClientsTask.getValue();
+
+            nbClientsConnectedLabel.setText(String.valueOf(nbClientsConnected));
+        });
+
+        getNbConnectedClientsTask.setOnFailed(e -> {
+            // TODO: Log error with logger
+            getNbConnectedClientsTask.getException().printStackTrace();
+        });
+
+        Thread thread = new Thread(getNbConnectedClientsTask);
+        thread.setDaemon(true);
+        thread.start();
     }
 }

@@ -48,7 +48,6 @@
     </left>
     <center>
         <ScrollPane id="centerScrollPane" fx:id="centerScrollPane">
-<!--            <fx:include source="./AllFiles.fxml" fx:id="allFilesView"/>-->
         </ScrollPane>
     </center>
     <bottom>
@@ -56,15 +55,15 @@
             <left>
                 <HBox id="serverAddressBox">
                     <Label>SERVER ADDRESS :</Label>
-                    <Label>10.53.108.19</Label>
+                    <Label fx:id="serverAddressLabel" />
                     <Label>:</Label>
-                    <Label>45000</Label>
+                    <Label fx:id="serverPortLabel" />
                 </HBox>
             </left>
             <right>
                 <HBox id="clientsConnectedBox">
                     <Label>CLIENTS CONNECTED :</Label>
-                    <Label>5</Label>
+                    <Label fx:id="nbClientsConnectedLabel" />
                 </HBox>
             </right>
         </BorderPane>

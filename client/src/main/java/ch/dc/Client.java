@@ -8,22 +8,32 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * JavaFX Client App
  */
 public class Client extends Application {
-
+    public static Logger logger;
     public static ClientHttpServer clientHttpServer;
     public static Stage stage;
     public static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
+        Client.logger.info("Client starting...");
+
         Client.stage = stage;
 
-        stage.setOnCloseRequest(windowEvent -> clientHttpServer.stop());
+        stage.setOnCloseRequest(windowEvent -> {
+            Client.logger.info("Client closing...");
+            ClientHttpServer.logger.info("Http server closing...");
+            clientHttpServer.stop();
+        });
 
         scene = new Scene(loadFXML("Connection"));
 

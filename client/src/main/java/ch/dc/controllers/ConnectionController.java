@@ -11,8 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Optional;
 
 public class ConnectionController {
 
@@ -21,6 +24,9 @@ public class ConnectionController {
     private final Router router = Router.getInstance();
     private final ClientModel clientModel = ClientModel.getInstance();
     private final ClientHttpServerModel clientHttpServerModel = ClientHttpServerModel.getInstance();
+
+    private String serverAddress;
+    private int serverPort;
 
     @FXML
     private Label serverAddressLabel;
@@ -60,16 +66,12 @@ public class ConnectionController {
         Task<Socket> connection = new Task<Socket>() {
             @Override
             public Socket call() throws IOException {
-                String serverAddressText = serverAddressTextField.getText();
-                int serverPortText = Integer.parseInt(serverPortTextField.getText());
+                serverAddress = serverAddressTextField.getText();
+                serverPort = Integer.parseInt(serverPortTextField.getText());
 
-                System.out.println(serverAddressText);
+                InetAddress serverAddress = InetAddress.getByName(ConnectionController.this.serverAddress);
 
-                InetAddress serverAddress = InetAddress.getByName(serverAddressText);
-
-                System.out.println(serverAddress.getHostAddress());
-
-                Socket clientSocket = new Socket(serverAddress, serverPortText);
+                Socket clientSocket = new Socket(serverAddress, serverPort);
 
                 return clientSocket;
             }
@@ -85,7 +87,10 @@ public class ConnectionController {
                 ObjectOutputStream objOut = new ObjectOutputStream(outputStream);
                 ObjectInputStream objIn = new ObjectInputStream(inputStream);
 
+                clientModel.setServerAddress(serverAddress);
+                clientModel.setServerPort(serverPort);
                 clientModel.setClientSocket(clientSocket);
+                clientModel.setIp(getIPv4LocalAddress().getHostAddress());
                 clientModel.setObjIn(objIn);
                 clientModel.setObjOut(objOut);
 
@@ -122,5 +127,64 @@ public class ConnectionController {
         errorLabel.setGraphic(new FontAwesomeIcon(FontAwesome.EXCLAMATION_TRIANGLE));
 
         return errorLabel;
+    }
+
+    /**
+     * Returns the local IPv4 address of the server or 127.0.0.1 if no address was found.
+     *
+     * @return The local IPv4 address of the server or 127.0.0.1 if no address was found.
+     *
+     * @see InetAddress
+     */
+    private InetAddress getIPv4LocalAddress() {
+        InetAddress localAddress = null;
+        List<InetAddress> addressList = new ArrayList<>();
+
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = interfaces.nextElement();
+                // Filters out 127.0.0.1 and inactive interfaces
+                if (networkInterface.isLoopback() || !networkInterface.isUp()) {
+                    continue;
+                }
+
+                Enumeration<InetAddress> interfaceAddresses = networkInterface.getInetAddresses();
+                while (interfaceAddresses.hasMoreElements()) {
+                    InetAddress address = interfaceAddresses.nextElement();
+
+                    if (address instanceof Inet6Address) {
+                        continue;
+                    }
+
+                    addressList.add(address);
+                }
+            }
+
+            Optional<InetAddress> wlanAddress = addressList
+                    .stream()
+                    .filter(address -> address.getHostAddress().startsWith("wlan"))
+                    .findFirst();
+
+            if (wlanAddress.isPresent()) {
+                localAddress = wlanAddress.get();
+            } else {
+                Optional<InetAddress> ethAddress = addressList
+                        .stream()
+                        .filter(address -> address.getHostAddress().startsWith("eth"))
+                        .findFirst();
+
+                if (ethAddress.isPresent()) {
+                    localAddress = ethAddress.get();
+                } else {
+                    localAddress = InetAddress.getLocalHost();
+                }
+            }
+
+        } catch (SocketException | UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
+        return localAddress;
     }
 }

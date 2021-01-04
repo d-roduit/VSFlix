@@ -55,8 +55,8 @@ public class MyFilesController {
     }
 
     private void addFile(FileType fileType) {
-        String clientHttpServerIp = clientHttpServerModel.getIp();
-        int clientHttpServerPort = clientHttpServerModel.getPort();
+        String myIp = clientModel.getIp();
+        int myHttpServerPort = clientHttpServerModel.getPort();
 
         switch (fileType) {
             case AUDIO:
@@ -69,8 +69,8 @@ public class MyFilesController {
                     FileEntry fileEntry = new FileEntry(
                             audioFile,
                             fileType,
-                            clientHttpServerIp,
-                            clientHttpServerPort
+                            myIp,
+                            myHttpServerPort
                     );
 
                     addFileOnServer(fileEntry);
@@ -87,8 +87,8 @@ public class MyFilesController {
                     FileEntry fileEntry = new FileEntry(
                             videoFile,
                             fileType,
-                            clientHttpServerIp,
-                            clientHttpServerPort
+                            myIp,
+                            myHttpServerPort
                     );
 
                     addFileOnServer(fileEntry);

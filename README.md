@@ -1,5 +1,3 @@
-# VSFlix
-
 <div align="center">
             <a href="https://gitlab.com/d-roduit/vsflix/"><img src="client/src/main/resources/ch/dc/assets/images/vsflix.png" align="center" height="150" alt="VSFlix Logo"></a>
 

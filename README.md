@@ -13,7 +13,7 @@
 
 
 <div align="center">
-    <a href="https://gitlab.com/d-roduit/vsflix/"><img src="VSFlix_Screenshot.png" align="center" height="400" alt="Demo screenshot"></a>
+    <a href="https://gitlab.com/d-roduit/vsflix/"><img src="demo_screenshots/VSFlix_Screenshot.png" align="center" height="400" alt="Demo screenshot"></a>
 </div>
 <br>
 

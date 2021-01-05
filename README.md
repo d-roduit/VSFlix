@@ -24,10 +24,9 @@ The technology used for this project rely entirely on Java (JavaFX application f
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Running the tests](#running-the-tests)
-3. [Authors](#authors)
-4. [Guides and resources](#guides-and-resources)
-5. [License](#license)
+2. [Authors](#authors)
+3. [Guides and resources](#guides-and-resources)
+4. [License](#license)
 
 ## <a name="getting-started"></a>Getting Started
 

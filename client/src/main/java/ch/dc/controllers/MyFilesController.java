@@ -117,22 +117,31 @@ public class MyFilesController {
         Task<FileEntry> addFileOnServerTask = new Task<FileEntry>() {
             @Override
             public FileEntry call() throws IOException {
+            Client.logger.info("Sending " + Command.ADDFILE.value + " command...");
             clientModel.getObjOut().writeUTF(Command.ADDFILE.value);
             clientModel.getObjOut().flush();
 
+            System.out.println("------ DEBUG -------");
+                System.out.println(fileEntry.getFile().getPath());
+                System.out.println(fileEntry.getClientIp());
+                System.out.println(fileEntry.getClientHttpPort());
+                System.out.println(fileEntry.getFileType());
+            System.out.println("------ END DEBUG -------");
+
+            Client.logger.info("Writing fileEntry to ObjectOutputStream...");
             clientModel.getObjOut().writeObject(fileEntry);
             clientModel.getObjOut().flush();
 
             String addFileStatus = clientModel.getObjIn().readUTF();
-
-            //TODO: Log
-            System.out.println("addFileStatus : " + addFileStatus);
+            Client.logger.info("Add file status : " + addFileStatus);
 
             return fileEntry;
             }
         };
 
         addFileOnServerTask.setOnSucceeded(e -> {
+            Client.logger.info("Add file on server succeeded.");
+
             FileEntry fileEntryReturned = addFileOnServerTask.getValue();
 
             if (fileEntryReturned != null) {
@@ -141,8 +150,7 @@ public class MyFilesController {
         });
 
         addFileOnServerTask.setOnFailed(e -> {
-            // TODO: Log
-            addFileOnServerTask.getException().printStackTrace();
+            Client.logger.severe("Add file on server failed (" + addFileOnServerTask.getException().getMessage() + ").");
         });
 
         Thread thread = new Thread(addFileOnServerTask);
@@ -169,22 +177,24 @@ public class MyFilesController {
         Task<FileEntry> unshareFileOnServerTask = new Task<FileEntry>() {
             @Override
             public FileEntry call() throws IOException {
-            clientModel.getObjOut().writeUTF(Command.UNSHAREFILE.value);
-            clientModel.getObjOut().flush();
+                Client.logger.info("Sending " + Command.UNSHAREFILE.value + " command...");
+                clientModel.getObjOut().writeUTF(Command.UNSHAREFILE.value);
+                clientModel.getObjOut().flush();
 
-            clientModel.getObjOut().writeObject(fileEntry);
-            clientModel.getObjOut().flush();
+                Client.logger.info("Writing fileEntry to ObjectOutputStream");
+                clientModel.getObjOut().writeObject(fileEntry);
+                clientModel.getObjOut().flush();
 
-            String unshareFileStatus = clientModel.getObjIn().readUTF();
+                String unshareFileStatus = clientModel.getObjIn().readUTF();
 
-            //TODO: Log
-            System.out.println("unshareFileStatus : " + unshareFileStatus);
+                Client.logger.info("Unshare file status : " + unshareFileStatus);
 
-            return fileEntry;
+                return fileEntry;
             }
         };
 
         unshareFileOnServerTask.setOnSucceeded(e -> {
+            Client.logger.info("Unshare file succeeded.");
             FileEntry fileEntryReturned = unshareFileOnServerTask.getValue();
 
             if (fileEntryReturned != null) {
@@ -193,7 +203,7 @@ public class MyFilesController {
         });
 
         unshareFileOnServerTask.setOnFailed(e -> {
-            // TODO: Log
+            Client.logger.severe("Unshare file failed (" + unshareFileOnServerTask.getException().getMessage() + ").");
             unshareFileOnServerTask.getException().printStackTrace();
         });
 
@@ -354,6 +364,7 @@ public class MyFilesController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Load AudioPlayer view succeeded.");
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -362,12 +373,11 @@ public class MyFilesController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
-            loadView.getException().printStackTrace();
+            Client.logger.severe("Load AudioPlayer view failed (" + loadView.getException().getMessage() + ").");
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Load AudioPlayer view cancelled.");
         });
 
         Thread thread = new Thread(loadView);
@@ -395,6 +405,7 @@ public class MyFilesController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Load VideoPlayer view succeeded.");
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -403,12 +414,11 @@ public class MyFilesController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
-            loadView.getException().printStackTrace();
+            Client.logger.severe("Load VideoPlayer view failed (" + loadView.getException().getMessage() + ").");
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Load VideoPlayer view cancelled.");
         });
 
         Thread thread = new Thread(loadView);

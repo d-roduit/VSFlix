@@ -62,7 +62,8 @@
             </left>
             <right>
                 <HBox id="clientsConnectedBox">
-                    <Label>CLIENTS CONNECTED :</Label>
+<!--                    <Label>CLIENTS CONNECTED :</Label>-->
+                    <Label></Label>
                     <Label fx:id="nbClientsConnectedLabel" />
                 </HBox>
             </right>

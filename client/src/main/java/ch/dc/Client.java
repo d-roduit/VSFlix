@@ -8,10 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 /**
@@ -39,7 +36,7 @@ public class Client extends Application {
 
         Font fontawesomeFont = Font.loadFont(Client.class.getResourceAsStream("assets/fonts/Font-Awesome-5-Free-Solid-900.otf"), 13);
         if (fontawesomeFont == null) {
-            // TODO: Log font loading error
+            Client.logger.severe("FontAwesome font (Font-Awesome-5-Free-Solid-900.otf) could not be loaded.");
         }
 
         stage.getIcons().add(new Image(getClass().getResourceAsStream("assets/images/v_small.png")));
@@ -55,6 +52,7 @@ public class Client extends Application {
     }
 
     public static Parent loadFXML(String fxml) throws IOException {
+        Client.logger.info("Load FXML file \"" + fxml +  ".fxml\" requested");
         FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("views/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }

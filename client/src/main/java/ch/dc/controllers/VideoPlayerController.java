@@ -1,10 +1,10 @@
 package ch.dc.controllers;
 
 import ch.dc.Client;
+import ch.dc.FileEntry;
 import ch.dc.Router;
 import ch.dc.models.ClientHttpServerModel;
 import ch.dc.models.ClientModel;
-import ch.dc.FileEntry;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -60,17 +60,16 @@ public class VideoPlayerController {
         String fileName = fileToPlay.getFile().getName();
         String filePath = URLEncoder.encode(fileToPlay.getFile().getPath(), StandardCharsets.UTF_8).replace("+", "%20");
         String clientIpAddress = fileToPlay.getClientIp();
+        int clientHttpServerPort = fileToPlay.getClientHttpPort();
         String clientHttpServerContextPath = clientHttpServerModel.getContextPath();
-        int clientHttpServerPort = clientHttpServerModel.getPort();
 
 
         String mediaSourcePath = "http://" + clientIpAddress + ":" + clientHttpServerPort + clientHttpServerContextPath + filePath;
-        System.out.println("MEDIAPATH TO PLAY : " + mediaSourcePath);
 
         media = new Media(mediaSourcePath);
 
         media.setOnError(() -> {
-            // TODO: Log Error
+            Client.logger.severe("Media error (" + media.getError().getType() + ").");
             handleMediaError(media.getError().getType());
         });
 
@@ -79,6 +78,7 @@ public class VideoPlayerController {
         playerViewController.initializePlayer(media, mediaView);
 
         playerViewController.mediaPlayer.setOnError(() -> {
+            Client.logger.severe("Media error (" + playerViewController.mediaPlayer.getError().getType() + ").");
             handleMediaError(playerViewController.mediaPlayer.getError().getType());
         });
 
@@ -123,8 +123,6 @@ public class VideoPlayerController {
                 break;
         }
 
-        // TODO: Log Error
-
         if (errorLabel == null) {
             errorLabel = new Label(errorMessage.toString());
             errorLabel.setId("errorLabel");
@@ -157,6 +155,8 @@ public class VideoPlayerController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Load Layout view succeeded.");
+
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -172,12 +172,12 @@ public class VideoPlayerController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
+            Client.logger.severe("Load Layout view failed (" + loadView.getException().getMessage() + ").");
             loadView.getException().printStackTrace();
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Load Layout view cancelled (" + loadView.getException().getMessage() + ").");
         });
 
         Thread thread = new Thread(loadView);

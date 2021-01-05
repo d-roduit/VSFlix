@@ -1,12 +1,11 @@
 package ch.dc;
+
 import java.io.IOException;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * <b>Server is the class that handles the files shared by the clients.</b>
@@ -22,7 +21,7 @@ public class Server {
     /**
      * The port that the server listens to.
      */
-    private int port = 45000;
+    private int port;
 
     /**
      * The clients connected.
@@ -52,8 +51,9 @@ public class Server {
             socketServer = new ServerSocket(port,0);
 
             //wait for client connection
-            System.out.println("Waiting for a client connection:");
-            System.out.println("------------------------------------------");
+            logger.info("Waiting for a client connection...");
+
+            System.out.println("--------------------------------");
 
             //infinite loop
             while (true) {
@@ -65,6 +65,8 @@ public class Server {
                     Client client = new Client(socket);
                     clients.add(client);
 
+                    logger.info("Client (" + client.getIp() + ":" + client.getExchangingPort() + ") connected");
+
                     System.out.println("------------------------------------------");
                     System.out.println("Client (" + client.getIp() + ":" + client.getExchangingPort() + ") is connected");
                     System.out.println("------------------------------------------");
@@ -73,15 +75,18 @@ public class Server {
                     Thread clientHandler = new ClientHandler(this, client);
 
                     //starting the thread
+                    logger.info("Client handler starting...");
                     clientHandler.start();
                 } catch (Exception e) {
+                    logger.severe("Exception occured (" + e.getMessage() + ").");
                     if (socket != null) {
+                        logger.severe("Closing socket.");
                         socket.close();
                     }
-                    e.printStackTrace();
                 }
             }
         } catch (IOException e) {
+            logger.severe("IOException occured (" + e.getMessage() + ").");
             e.printStackTrace();
         }
     }

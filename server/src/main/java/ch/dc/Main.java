@@ -15,7 +15,7 @@ public class Main {
 
         Server.logger = serverLogger;
 
-        int port = 45000;
+        int port = 50000;
 
         if (args.length > 0) {
             int userPort = Integer.parseInt(args[0]);
@@ -26,6 +26,7 @@ public class Main {
         }
 
         Server server = new Server(port);
+        Server.logger.info("Server starting...");
         server.start();
     }
 

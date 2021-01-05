@@ -62,12 +62,12 @@ public class ClientHandler extends Thread {
                 messageReceived = objIn.readUTF();
 
                 String[] msgArray = messageReceived.split(" ");
-                System.out.println("Client (" + client.getIp() + ":" + client.getExchangingPort() + ") request : " + messageReceived);
                 Command command = Command.valueOf(msgArray[0]);
+                Server.logger.info("Command " + command.value + " received.");
                 switch (command) {
                     case HTTPPORT:
+                        Server.logger.info("Command parameter : " + msgArray[1]);
                         int clientHttpPort = Integer.parseInt(msgArray[1]);
-                        System.out.println("Http port : " + clientHttpPort);
                         client.setHttpPort(clientHttpPort);
                         objOut.writeUTF("HTTPPORT OK");
                         objOut.flush();
@@ -77,63 +77,66 @@ public class ClientHandler extends Thread {
                         objOut.flush();
                         break;
                     case ADDFILE:
-                        System.out.println("Add file.");
                         try {
                             FileEntry fileEntry = (FileEntry) objIn.readObject();
+                            Server.logger.info("Command parameter : " + fileEntry.getFile().getPath());
                             client.addFileEntry(fileEntry);
                             objOut.writeUTF("ADDFILE OK");
                         } catch (ClassNotFoundException e) {
-                            // TODO: Log
+                            Server.logger.severe("Class not found exception when reading ObjectInputStream (" + e.getMessage() + ").");
                             objOut.writeUTF("ADDFILE KO");
-                            e.printStackTrace();
                         }
                         objOut.flush();
                         break;
                     case UNSHAREFILE:
-                        System.out.println("Remove a file.");
                         try {
                             FileEntry fileEntry = (FileEntry) objIn.readObject();
+                            Server.logger.info("Command parameter : " + fileEntry.getFile().getPath());
                             client.removeFileEntry(fileEntry);
                             objOut.writeUTF("UNSHAREFILE OK");
                         } catch (ClassNotFoundException e) {
-                            // TODO: Log
+                            Server.logger.severe("Class not found exception when reading ObjectInputStream (" + e.getMessage() + ").");
                             objOut.writeUTF("UNSHAREFILE KO");
-                            e.printStackTrace();
                         }
                         objOut.flush();
                         break;
                     case GETNBCONNECTEDCLIENTS:
-                        objOut.writeInt(getNbConnectedClients());
+                        String nbConnectedClients = String.valueOf(getNbConnectedClients());
+                        objOut.writeUTF(nbConnectedClients);
                         objOut.flush();
                         break;
                     case DISCONNECT:
-                        System.out.println("Client (" + client.getIp() + ":" + client.getExchangingPort() + ") disconnect... Closing this connection.");
+                        Server.logger.info("Client disconnecting...");
                         server.getClients().remove(client);
                         disconnect = true;
                         break;
                     default:
+                        Server.logger.info("Invalid input");
                         objOut.writeUTF("INVALID INPUT");
                         objOut.flush();
                 }
-            }catch (SocketException se) {
+            } catch (SocketException se) {
                 server.getClients().remove(client);
                 disconnect = true;
                 se.printStackTrace();
-            }catch(IOException e){
+            } catch(IOException e) {
                 e.printStackTrace();
             }
         }
 
         try {
+            Server.logger.info("Connection closing...");
             client.getSocket().close();
-            System.out.println("Connection closed.");
+            Server.logger.info("Connection closed.");
+            Server.logger.info("ObjectInputStream closing...");
             objIn.close();
+            Server.logger.info("ObjectInputStream closed.");
+            Server.logger.info("ObjectOutputStream closing...");
             objOut.close();
+            Server.logger.info("ObjectOutputStream closed...");
         } catch (IOException e) {
-            e.printStackTrace();
+            Server.logger.severe("IOException occured (" + e.getMessage() + ")");
         }
-
-
     }
 
     /**

@@ -81,7 +81,7 @@ public class AudioPlayerController {
         media = new Media(mediaSourcePath);
 
         media.setOnError(() -> {
-            // TODO: Log Error
+            Client.logger.severe("Media error (" + media.getError().getType() + ").");
 
             artistLabel.setVisible(false);
             artistLabel.setManaged(false);
@@ -98,6 +98,8 @@ public class AudioPlayerController {
         playerViewController.initializePlayer(media, mediaView);
 
         playerViewController.mediaPlayer.setOnError(() -> {
+            Client.logger.severe("Media error (" + playerViewController.mediaPlayer.getError().getType() + ").");
+
             handleMediaError(playerViewController.mediaPlayer.getError().getType());
         });
 
@@ -161,9 +163,6 @@ public class AudioPlayerController {
                 break;
         }
 
-        System.err.println(errorMessage);
-
-        // TODO: Log Error
         titleLabel.setText(errorMessage.toString());
     }
 
@@ -191,6 +190,8 @@ public class AudioPlayerController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Load Layout view succeeded.");
+
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -206,12 +207,11 @@ public class AudioPlayerController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
-            loadView.getException().printStackTrace();
+            Client.logger.severe("Load Layout view failed (" + loadView.getException().getMessage() + ").");
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Load Layout view cancelled.");
         });
 
         Thread thread = new Thread(loadView);

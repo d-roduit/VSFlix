@@ -14,8 +14,9 @@ public class Main {
         Logger clientLogger = initializeLogger("ClientLogger", fileHandler);
         Logger httpServerLogger = initializeLogger("HttpServerLogger", fileHandler);
 
-        ClientHttpServer clientHttpServer = ClientHttpServer.getInstance();
         ClientHttpServer.logger = httpServerLogger;
+        ClientHttpServer clientHttpServer = new ClientHttpServer();
+        clientHttpServer.start();
 
         Client.logger = clientLogger;
         Client.clientHttpServer = clientHttpServer;

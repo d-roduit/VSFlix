@@ -15,41 +15,49 @@ import java.util.logging.Logger;
 
 public class ClientHttpServer {
 
-    private static ClientHttpServer INSTANCE;
-
-    static {
-        try {
-            INSTANCE = new ClientHttpServer();
-        } catch (IOException ioException) {
-            // TODO: Log error
-            ioException.printStackTrace();
-        }
-    }
-
     public static Logger logger;
 
-    private final HttpServer server;
+    private HttpServer server = null;
 
     private final String contextPath = "/";
 
     private final ClientHttpServerModel clientHttpServerModel = ClientHttpServerModel.getInstance();
 
-    private ClientHttpServer() throws IOException {
-        server = HttpServer.create();
-        InetSocketAddress inetSocketAddress = new InetSocketAddress(0);
-        server.bind(inetSocketAddress, 0);
+    public ClientHttpServer() {
+        try {
+            server = HttpServer.create();
 
-        int httpServerPort = server.getAddress().getPort();
+            ClientHttpServer.logger.info("Http Server created");
 
-        clientHttpServerModel.setPort(httpServerPort);
-        clientHttpServerModel.setContextPath(contextPath);
+            InetSocketAddress inetSocketAddress = new InetSocketAddress(0);
+            server.bind(inetSocketAddress, 0);
 
-        System.out.println("--- SERVER ADDRESS INFORMATIONS ---");
-        System.out.println("Server port : " + httpServerPort);
+            int httpServerPort = server.getAddress().getPort();
 
-        server.createContext(contextPath).setHandler(this::handleRequest);
-        server.setExecutor(Executors.newCachedThreadPool());
+            clientHttpServerModel.setPort(httpServerPort);
+            clientHttpServerModel.setContextPath(contextPath);
+
+            ClientHttpServer.logger.info("Http Server ip : " + server.getAddress().getHostString());
+            ClientHttpServer.logger.info("Http Server port : " + httpServerPort);
+            ClientHttpServer.logger.info("Http Server context path : " + contextPath);
+
+            server.createContext(contextPath).setHandler(this::handleRequest);
+            server.setExecutor(Executors.newCachedThreadPool());
+        } catch (Exception e) {
+            ClientHttpServer.logger.severe("Http Server could not be created (" + e.getMessage() + ")");
+        }
+    }
+
+    public void start() {
+        ClientHttpServer.logger.info("Http Server starting...");
+
+        if (server == null) {
+            ClientHttpServer.logger.info("Http Server not started.");
+            return;
+        }
+
         server.start();
+        ClientHttpServer.logger.info("Http Server started.");
     }
 
     private void handleRequest(HttpExchange exchange) {
@@ -57,29 +65,22 @@ public class ClientHttpServer {
             String requestMethod = exchange.getRequestMethod();
             Headers responseHeaders = exchange.getResponseHeaders();
 
-            System.out.println("-------- Request Information --------");
-            System.out.println("Request : " + requestMethod);
-            System.out.println("Local address : " + exchange.getLocalAddress().getHostString());
-            System.out.println("Remote address : " + exchange.getRemoteAddress().getHostString());
-            Headers requestHeaders = exchange.getRequestHeaders();
-            printHeaders(requestHeaders);
+            ClientHttpServer.logger.info("Request method : " + requestMethod);
+            ClientHttpServer.logger.info("Local address : " + exchange.getLocalAddress().getHostString());
+            ClientHttpServer.logger.info("Remote address : " + exchange.getRemoteAddress().getHostString());
+
             consumeRequestBodyInputStream(exchange.getRequestBody());
-            System.out.println("-------- End Request Information --------\n");
 
             String filePath = extractFileAbsolutePath(exchange.getRequestURI());
 
             File fileToSend = new File(filePath);
 
-            System.out.println("filePath received : " + filePath);
+            ClientHttpServer.logger.info("File path received : " + filePath);
 
             if (!fileToSend.exists() || !fileToSend.isFile() || !isFileExtensionSupported(fileToSend)) {
+                ClientHttpServer.logger.warning("Incorrect file path (file not exists || is not file || file extension not supported).");
 
-//                System.out.println("|----- FICHIER PAS CORRECT -----|");
-
-                System.out.println(fileToSend.exists());
-                System.out.println(fileToSend.isFile());
-                System.out.println(isFileExtensionSupported(fileToSend));
-
+                ClientHttpServer.logger.info("Sending 404 response headers...");
                 exchange.sendResponseHeaders(404, 0);
 
                 OutputStream outputStream = exchange.getResponseBody();
@@ -89,10 +90,11 @@ public class ClientHttpServer {
 
                 exchange.close();
 
+                ClientHttpServer.logger.info("Exchange closed.");
                 return;
             }
 
-//            System.out.println("|----- FILE VERIFIED SUCCESSFULLY -----|");
+            ClientHttpServer.logger.info("File OK.");
 
             int fileBytesSize = (int) fileToSend.length();
             byte[] fileByteArray = new byte[fileBytesSize];
@@ -101,9 +103,14 @@ public class ClientHttpServer {
             bufferedInputStream.read(fileByteArray, 0, fileBytesSize);
 
             String contentType = getContentType(fileToSend);
+
+            ClientHttpServer.logger.info("Exchange response Content-Type : " + contentType);
+
             if (contentType != null) {
                 responseHeaders.add("Content-Type", contentType);
             }
+
+            ClientHttpServer.logger.info("Content-Length : " + String.valueOf(fileBytesSize));
 
             responseHeaders.add("Content-Length", String.valueOf(fileBytesSize));
 
@@ -119,12 +126,11 @@ public class ClientHttpServer {
                 bufferedOutputStream.close();
 
                 exchange.close();
-            }
 
+                ClientHttpServer.logger.info("Exchange closed.");
+            }
         } catch (Exception e) {
-            // TODO: Log
-            System.err.println("Error occurred : ");
-            e.printStackTrace();
+            ClientHttpServer.logger.severe("Exception occured while handling HTTP exchange (" + e.getMessage() + ").");
         }
     }
 
@@ -135,14 +141,13 @@ public class ClientHttpServer {
     }
 
     private void consumeRequestBodyInputStream(InputStream requestBody) {
+        ClientHttpServer.logger.info("Reading the HTTP request body...");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(requestBody))) {
             while (reader.ready()) {
                 reader.readLine();
             }
         } catch (Exception e) {
-            // TODO: Log error
-            System.err.println("Error in requestBody reader");
-            e.printStackTrace();
+            ClientHttpServer.logger.severe("Exception occured while reading the HTTP request body (" + e.getMessage() + ").");
         }
     }
 
@@ -197,9 +202,7 @@ public class ClientHttpServer {
     }
 
     public void stop() {
-        //TODO: Log HttpServer stopping...
+        ClientHttpServer.logger.info("Http Server stopping...");
         server.stop(0);
     }
-
-    public static ClientHttpServer getInstance() { return INSTANCE; }
 }

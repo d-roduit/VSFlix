@@ -20,6 +20,7 @@ public class LayoutController {
     private final Router router = Router.getInstance();
 
     private Task<Parent> loadView;
+    private Task<Integer> getNbConnectedClientsTask;
 
     @FXML
     private ScrollPane centerScrollPane;
@@ -44,12 +45,14 @@ public class LayoutController {
 
     @FXML
     public void initialize() {
+        nbClientsConnectedLabel.setVisible(false);
+
         String partialViewToLoad = "AllFiles";
 
         if (router.hasPartialViewRequested()) {
             String partialViewRequested = router.getPartialViewRequested();
 
-            // TODO: Log has partial view requested : partialView value
+            Client.logger.info("Partial view requested (" + partialViewRequested + ").");
 
             if (partialViewRequested.equals("MyFiles")) {
                 partialViewToLoad = partialViewRequested;
@@ -64,23 +67,26 @@ public class LayoutController {
 
 
         allFilesButton.setOnAction(event -> {
+            Client.logger.info("AllFiles button clicked.");
             displayAllFilesView();
-            updateNbClientsConnected();
+//            updateNbClientsConnected();
         });
 
         myFilesButton.setOnAction(event -> {
+            Client.logger.info("MyFiles button clicked.");
             displayMyFilesView();
-            updateNbClientsConnected();
+//            updateNbClientsConnected();
         });
 
         disconnectButton.setOnAction(event -> {
+            Client.logger.info("Disconnect button clicked.");
             disconnectFromServer();
         });
 
         serverAddressLabel.setText(clientModel.getServerAddress());
         serverPortLabel.setText(String.valueOf(clientModel.getServerPort()));
 
-        updateNbClientsConnected();
+//        updateNbClientsConnected();
     }
 
     private void displayAllFilesView() {
@@ -103,6 +109,7 @@ public class LayoutController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Load AllFiles view succeeded.");
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -113,12 +120,11 @@ public class LayoutController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
-            loadView.getException().printStackTrace();
+            Client.logger.severe("Load AllFiles view failed. (" + loadView.getException().getMessage() + ").");
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Load AllFiles view cancelled.");
         });
 
         Thread thread = new Thread(loadView);
@@ -146,6 +152,8 @@ public class LayoutController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Load MyFiles view succeeded.");
+
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -156,12 +164,12 @@ public class LayoutController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
+            Client.logger.severe("Load MyFiles view failed (" + loadView.getException().getMessage() + ").");
             loadView.getException().printStackTrace();
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Load MyFiles view cancelled.");
         });
 
         Thread thread = new Thread(loadView);
@@ -174,13 +182,13 @@ public class LayoutController {
             loadView.cancel();
         }
 
-        // TODO: Disconnect from server
         ObjectOutputStream objOut = clientModel.getObjOut();
         try {
+            Client.logger.info("Sending " + Command.DISCONNECT.value + " command...");
             objOut.writeUTF(Command.DISCONNECT.value);
             objOut.flush();
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            Client.logger.severe("Sending " + Command.DISCONNECT.value + " command exception (" + ioException.getMessage() + ").");
         }
 
         // Display the Connection view
@@ -199,6 +207,8 @@ public class LayoutController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Disconnecting from server succeeded.");
+
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -209,12 +219,11 @@ public class LayoutController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
-            loadView.getException().printStackTrace();
+            Client.logger.severe("Disconnecting from server failed (" + loadView.getException().getMessage() + ").");
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Disconnecting from server cancelled.");
         });
 
         Thread thread = new Thread(loadView);
@@ -238,33 +247,47 @@ public class LayoutController {
     }
 
     private void updateNbClientsConnected() {
-        Task<Integer> getNbConnectedClientsTask = new Task<>() {
+        if (getNbConnectedClientsTask != null && getNbConnectedClientsTask.isRunning()) {
+            getNbConnectedClientsTask.cancel();
+        }
+
+        getNbConnectedClientsTask = new Task<>() {
             @Override
             public Integer call() {
-                int nbClientsConnected = 0;
+                String nbClientsConnected = "0";
 
                 try {
                     clientModel.getObjOut().writeUTF(Command.GETNBCONNECTEDCLIENTS.value);
                     clientModel.getObjOut().flush();
 
-                    nbClientsConnected = clientModel.getObjIn().readInt();
+                    nbClientsConnected = clientModel.getObjIn().readUTF();
                 } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    Client.logger.severe("Exception occurred while getting number of connected clients (" + ioException.getMessage() + ")");
                 }
 
-                return nbClientsConnected;
+                return Integer.valueOf(nbClientsConnected);
             }
         };
 
         getNbConnectedClientsTask.setOnSucceeded(e -> {
+            Client.logger.info("Get number of connected clients succeeded.");
+
             int nbClientsConnected = getNbConnectedClientsTask.getValue();
+
+            if (nbClientsConnected == 0) {
+                nbClientsConnectedLabel.setVisible(false);
+                return;
+            }
+
+            if (!nbClientsConnectedLabel.isVisible()) {
+//                nbClientsConnectedLabel.setVisible(true);
+            }
 
             nbClientsConnectedLabel.setText(String.valueOf(nbClientsConnected));
         });
 
         getNbConnectedClientsTask.setOnFailed(e -> {
-            // TODO: Log error with logger
-            getNbConnectedClientsTask.getException().printStackTrace();
+            Client.logger.severe("Get number of connected clients failed (" + getNbConnectedClientsTask.getException().getMessage() + ").");
         });
 
         Thread thread = new Thread(getNbConnectedClientsTask);

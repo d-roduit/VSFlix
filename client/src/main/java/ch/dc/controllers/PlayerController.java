@@ -1,6 +1,7 @@
 package ch.dc.controllers;
 
 
+import ch.dc.Client;
 import ch.dc.FontAwesome;
 import ch.dc.FontAwesomeIcon;
 import javafx.fxml.FXML;
@@ -55,6 +56,9 @@ public class PlayerController {
     public Button forwardButton;
 
     public void initializePlayer(Media media, MediaView mediaView) {
+        Client.logger.info("Player initialization...");
+        Client.logger.info("Media source : " + media.getSource());
+
         this.media = media;
         this.mediaSourcePath = media.getSource();
         this.mediaView = mediaView;
@@ -69,20 +73,37 @@ public class PlayerController {
         });
 
         mediaPlayer.setOnReady(() -> {
+            Client.logger.info("MediaPlayer ready.");
+
             Duration videoDuration = media.getDuration();
 
             totalDurationLabel.setText(createDurationAsText(videoDuration));
             currentTimerLabel.setText(createDurationAsText(mediaPlayer.getStartTime()));
         });
 
-        mediaPlayer.setOnPlaying(() -> playOrPauseIcon.setIcon(FontAwesome.PAUSE));
-        mediaPlayer.setOnPaused(() -> playOrPauseIcon.setIcon(FontAwesome.PLAY));
-        mediaPlayer.setOnStopped(() -> playOrPauseIcon.setIcon(FontAwesome.PLAY));
+        mediaPlayer.setOnPlaying(() -> {
+            Client.logger.info("MediaPlayer played.");
+            playOrPauseIcon.setIcon(FontAwesome.PAUSE);
+        });
+        mediaPlayer.setOnPaused(() -> {
+            Client.logger.info("MediaPlayer paused.");
+            playOrPauseIcon.setIcon(FontAwesome.PLAY);
+        });
+        mediaPlayer.setOnStopped(() -> {
+            Client.logger.info("MediaPlayer stopped.");
+            playOrPauseIcon.setIcon(FontAwesome.PLAY);
+        });
 
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.stop());
+        mediaPlayer.setOnEndOfMedia(() -> {
+            Client.logger.info("End of media reached.");
+            mediaPlayer.stop();
+        });
 
         mediaView.setMediaPlayer(mediaPlayer);
-        mediaView.setOnMouseClicked(mouseEvent -> playOrPause());
+        mediaView.setOnMouseClicked(mouseEvent ->  {
+            Client.logger.info("Play/Pause clicked.");
+            playOrPause();
+        });
 
         mediaProgressBar.valueProperty().addListener((observable, oldValue, newValue) -> {
             String newStyle = String.format(Locale.ROOT, "-mediaProgressBar-filled-track-color: " +
@@ -148,10 +169,22 @@ public class PlayerController {
         });
 
 
-        volumeButton.setOnAction(actionEvent -> muteOrUnmute());
-        playButton.setOnAction(actionEvent -> playOrPause());
-        backwardButton.setOnAction(actionEvent -> goBackward());
-        forwardButton.setOnAction(actionEvent -> goForward());
+        volumeButton.setOnAction(actionEvent -> {
+            Client.logger.info("Volume button clicked.");
+            muteOrUnmute();
+        });
+        playButton.setOnAction(actionEvent -> {
+            Client.logger.info("Play/Pause button clicked.");
+            playOrPause();
+        });
+        backwardButton.setOnAction(actionEvent -> {
+            Client.logger.info("Backward button clicked.");
+            goBackward();
+        });
+        forwardButton.setOnAction(actionEvent -> {
+            Client.logger.info("Forward button clicked.");
+            goForward();
+        });
     }
 
     private void muteOrUnmute() {

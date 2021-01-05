@@ -18,7 +18,7 @@
         </VBox>
         <VBox styleClass="fieldVbox">
             <Label fx:id="serverPortLabel" text="Port"/>
-            <TextField fx:id="serverPortTextField" id="serverPortTextField" text="45000"/>
+            <TextField fx:id="serverPortTextField" id="serverPortTextField" text="50000"/>
         </VBox>
     </HBox>
     <HBox fx:id="connectionErrorBox" id="connectionErrorBox"/>

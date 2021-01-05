@@ -2,7 +2,6 @@ package ch.dc.controllers;
 
 import ch.dc.*;
 import ch.dc.models.ClientModel;
-import ch.dc.FileEntry;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -12,7 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +24,7 @@ public class AllFilesController {
     private final Router router = Router.getInstance();
 
     private Task<Parent> loadView;
+    Task<List<FileEntry>> getAvailableFileTask;
 
     private final ClientModel clientModel = ClientModel.getInstance();
 
@@ -41,6 +42,8 @@ public class AllFilesController {
     }
 
     private void drawAvailableFilesEntries(List<FileEntry> fileEntries, FileType fileType) {
+        Client.logger.info("Drawing available files...");
+
         switch (fileType) {
             case AUDIO:
                 audioFilesListBox.getChildren().clear();
@@ -140,6 +143,8 @@ public class AllFilesController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Loading AudioPlayer view succeeded");
+
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -148,12 +153,12 @@ public class AllFilesController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
+            Client.logger.severe("Loading AudioPlayer view failed (" + loadView.getException().getMessage() + ").");
             loadView.getException().printStackTrace();
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Loading AudioPlayer view cancelled.");
         });
 
         Thread thread = new Thread(loadView);
@@ -181,6 +186,8 @@ public class AllFilesController {
         };
 
         loadView.setOnSucceeded(e -> {
+            Client.logger.info("Loading VideoPlayer view succeeded");
+
             Parent fxmlContent = loadView.getValue();
 
             if (fxmlContent != null) {
@@ -189,12 +196,11 @@ public class AllFilesController {
         });
 
         loadView.setOnFailed(e -> {
-            // TODO: Log error with logger
-            loadView.getException().printStackTrace();
+            Client.logger.severe("Loading VideoPlayer view failed (" + loadView.getException().getMessage() + ").");
         });
 
         loadView.setOnCancelled(e -> {
-            // TODO: Log error with logger
+            Client.logger.warning("Loading VideoPlayer view cancelled.");
         });
 
         Thread thread = new Thread(loadView);
@@ -203,27 +209,33 @@ public class AllFilesController {
     }
 
     private void getAvailableFilesAndDraw() {
-        Task<List<FileEntry>> getAvailableFileTask = new Task<List<FileEntry>>() {
+        if (getAvailableFileTask != null && getAvailableFileTask.isRunning()) {
+            getAvailableFileTask.cancel();
+        }
+
+        getAvailableFileTask = new Task<List<FileEntry>>() {
             @Override
             public List<FileEntry> call() throws IOException {
-                clientModel.getObjOut().writeUTF(Command.GETALLFILES.value);
-                clientModel.getObjOut().flush();
+                Client.logger.info("Sending " + Command.GETALLFILES.value + " command...");
+
+                ObjectOutputStream objOut = clientModel.getObjOut();
+                objOut.writeUTF(Command.GETALLFILES.value);
+                objOut.flush();
 
                 List<FileEntry> availableFileEntries = null;
 
                 try {
                     availableFileEntries = (List<FileEntry>) clientModel.getObjIn().readObject();
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    Client.logger.severe("Could not read object from ObjectInputStream (" + e.getMessage() + ").");
                 }
-
-                //TODO: Log
 
                 return availableFileEntries;
             }
         };
 
         getAvailableFileTask.setOnSucceeded(e -> {
+            Client.logger.info("Fetch available files succeeded.");
             List<FileEntry> availableFileEntries = getAvailableFileTask.getValue();
 
             if (availableFileEntries != null) {
@@ -243,8 +255,11 @@ public class AllFilesController {
         });
 
         getAvailableFileTask.setOnFailed(e -> {
-            // TODO: Log
-            getAvailableFileTask.getException().printStackTrace();
+            Client.logger.severe("Fetch available files failed (" + getAvailableFileTask.getException().getMessage() + ").");
+        });
+
+        getAvailableFileTask.setOnCancelled(e -> {
+            Client.logger.warning("Fetch available files cancelled.");
         });
 
         Thread thread = new Thread(getAvailableFileTask);

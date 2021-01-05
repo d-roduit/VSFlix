@@ -55,6 +55,7 @@ public class ConnectionController {
         connectionErrorBox.setManaged(false);
 
         connectButton.setOnAction(actionEvent -> {
+            Client.logger.info("Connect button clicked.");
             connectToServer();
         });
 
@@ -78,6 +79,8 @@ public class ConnectionController {
         };
 
         connection.setOnSucceeded(e -> {
+            Client.logger.info("Connection to server succeeded.");
+
             try {
                 Socket clientSocket = connection.getValue();
 
@@ -87,28 +90,36 @@ public class ConnectionController {
                 ObjectOutputStream objOut = new ObjectOutputStream(outputStream);
                 ObjectInputStream objIn = new ObjectInputStream(inputStream);
 
+
+                Client.logger.info("Server IP : " + serverAddress);
+                Client.logger.info("Server port : " + serverPort);
+
                 clientModel.setServerAddress(serverAddress);
                 clientModel.setServerPort(serverPort);
                 clientModel.setClientSocket(clientSocket);
-                clientModel.setIp(getIPv4LocalAddress().getHostAddress());
+
+                String clientIp = getIPv4LocalAddress().getHostAddress();
+                Client.logger.info("Client IP : " + clientIp);
+
+                clientModel.setIp(clientIp);
                 clientModel.setObjIn(objIn);
                 clientModel.setObjOut(objOut);
 
+                Client.logger.info("Sending " + Command.HTTPPORT.value + " command...");
                 objOut.writeUTF(Command.HTTPPORT.value + " " + clientHttpServerModel.getPort());
                 objOut.flush();
 
                 String httpStatus = objIn.readUTF();
-                //TODO: Log
-                System.out.println("httpStatus : " + httpStatus);
+                Client.logger.info("Http status received : " + httpStatus);
 
                 Client.setRoot("Layout");
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                Client.logger.severe("Load Layout view exception (" + ioException.getMessage() + ").");
             }
         });
 
         connection.setOnFailed(e -> {
-            // TODO: Log
+            Client.logger.severe("Connection to server failed (" + connection.getException().getMessage()  + ").");
             connectionErrorBox.setVisible(true);
             connectionErrorBox.setManaged(true);
             Label errorLabel = createErrorLabel("Connection refused : Verify server address");
@@ -138,7 +149,15 @@ public class ConnectionController {
      */
     private InetAddress getIPv4LocalAddress() {
         InetAddress localAddress = null;
-        List<InetAddress> addressList = new ArrayList<>();
+
+        try {
+            localAddress = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            Client.logger.severe("");
+        }
+
+        List<InetAddress> wlanAddressList = new ArrayList<>();
+        List<InetAddress> ethAddressList = new ArrayList<>();
 
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -157,31 +176,24 @@ public class ConnectionController {
                         continue;
                     }
 
-                    addressList.add(address);
+                    String interfaceName = networkInterface.getName();
+
+                    if (interfaceName.startsWith("wlan")) {
+                        wlanAddressList.add(address);
+                    } else if (interfaceName.startsWith("eth")) {
+                        ethAddressList.add(address);
+                    }
                 }
             }
 
-            Optional<InetAddress> wlanAddress = addressList
-                    .stream()
-                    .filter(address -> address.getHostAddress().startsWith("wlan"))
-                    .findFirst();
-
-            if (wlanAddress.isPresent()) {
-                localAddress = wlanAddress.get();
+            if (!wlanAddressList.isEmpty()) {
+                localAddress = wlanAddressList.get(0);
             } else {
-                Optional<InetAddress> ethAddress = addressList
-                        .stream()
-                        .filter(address -> address.getHostAddress().startsWith("eth"))
-                        .findFirst();
-
-                if (ethAddress.isPresent()) {
-                    localAddress = ethAddress.get();
-                } else {
-                    localAddress = InetAddress.getLocalHost();
+                if (!ethAddressList.isEmpty()) {
+                    localAddress = ethAddressList.get(0);
                 }
             }
-
-        } catch (SocketException | UnknownHostException e) {
+        } catch (SocketException e) {
             throw new RuntimeException(e);
         }
 

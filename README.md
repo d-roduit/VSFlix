@@ -47,12 +47,14 @@ The communication is based on simple text commands that the client sends every t
 
 Possible commands :
 
-- **HTTPPORT <http_port>** : Send the client HTTP Server port to the server when the client connects.
-- **GETALLFILES** : Request all shared files from the server.
-- **ADDFILE <FileEntry>** : Send a FileEntry object for the server to add it to its shared files.
-- **UNSHAREFILE <FileEntry>** : Send a FileEntry object for the server to remove it from its shared files.
-- **GETNBCONNECTEDCLIENTS** : Request the number of connected clients.
-- **DISCONNECT** : Send a request to end the connection. It must be noted that the client does not wait on the server to close its own connection.
+| Command | Action |
+| --------- | --------- | 
+| HTTPPORT <http_port> | Send the client HTTP Server port to the server when the client connects. |
+| GETALLFILES | Request all shared files from the server. |
+| ADDFILE <FileEntry> | Send a FileEntry object for the server to add it to its shared files. |
+| UNSHAREFILE <FileEntry> | Send a FileEntry object for the server to remove it from its shared files. |
+| GETNBCONNECTEDCLIENTS | Request the number of connected clients. |
+| DISCONNECT | Send a request to end the connection. It must be noted that the client does not wait on the server to close its own connection. |
 
 ## <a name="authors"></a>Authors
 
@@ -78,7 +80,7 @@ Possible commands :
 ## <a name="guides-and-resources"></a>Guides and resources
 
 * [JavaFX](https://openjfx.io/) - JavaFX
-* [FontAwesme](https://fontawesome.com/) - FontAwesome 5 Icons
+* [FontAwesome](https://fontawesome.com/) - FontAwesome 5 Icons
 * [Maven](https://maven.apache.org/) - Dependency Management
 
 

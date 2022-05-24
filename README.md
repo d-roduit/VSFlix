@@ -1,5 +1,5 @@
 <div align="center">
-            <a href="https://gitlab.com/d-roduit/vsflix/"><img src="client/src/main/resources/ch/dc/assets/images/vsflix.png" align="center" height="150" alt="VSFlix Logo"></a>
+            <a href="https://github.com/d-roduit/VSFlix"><img src="readme_pictures/VSFlix_Logo_wide.png" align="center" height="150" alt="VSFlix Logo"></a>
 
 #
 
@@ -11,7 +11,7 @@
 
 
 <div align="center">
-    <a href="https://gitlab.com/d-roduit/vsflix/"><img src="demo_screenshots/VSFlix_Screenshot.png" align="center" height="400" alt="Demo screenshot"></a>
+    <a href="https://github.com/d-roduit/VSFlix"><img src="readme_pictures/VSFlix_Screenshot.png" align="center" height="400" alt="Demo screenshot"></a>
 </div>
 <br>
 
@@ -27,15 +27,20 @@ The VSFlix project's goal is to be able to make one or multiple clients communic
 
 ## <a name="getting-started"></a>Getting Started
 
-### Installing
+### Running the server and the client application
 
-You will need to follow the steps below in order to launch the project.
+Follow the steps below in order to run the project :
 
-1. Unzip the file downloaded.
-2. Launch the VSFlix server by double-clicking on the server jar.
-3. Launch the VSFlix client application by double-clicking on the client jar.
+1. Download the project files to your computer and open the project in your favorite IDE (Eclipse, IntelliJ IDEA, etc.)
+2. Download the project dependencies with Maven. _(This step is often proposed or performed automatically by the IDE)_
+3. Run the server. The starting class for the server is `ch.dc.Main` in the server folder.
+    
+    _N. B. : The server listens any incoming connection on ip address `0.0.0.0` and uses by default port `50000`. 
+If this port is already used by another process, you can change it directly in the starting class or by passing the port number as an argument when running the program._
 
-Once these three steps have been executed, you will be able to use the VSFlix client to stream (bidirectionnal stream) files from / to the other connected clients !
+4. Run one (or more) client(s). The starting class for the client application is `ch.dc.Main` in the client folder.
+
+Once these 4 steps have been executed, you will be able to use the VSFlix client to stream (bidirectionnal stream) files from / to the other connected clients !
 
 ## <a name="technologies"></a>Technologies
 
@@ -71,15 +76,15 @@ Possible commands :
 <table>
    <tbody>
       <tr>
-         <td align="center" valign="top" width="11%">
+         <td align="center">
             <a href="https://github.com/d-roduit">
-            <img src="https://github.com/d-roduit.png?s=75" width="75" height="75"><br />
+            <img src="https://github.com/d-roduit.png?s=75" width="75"><br />
             Daniel Roduit
             </a>
          </td>
-         <td align="center" valign="top" width="11%">
+         <td align="center">
             <a href="https://gitlab.com/g.cathy">
-            <img src="https://secure.gravatar.com/avatar/8249f413f33aff71168b6c34d4bffbc3?s=180&d=identicon" width="75" height="75"><br />
+            <img src="https://secure.gravatar.com/avatar/8249f413f33aff71168b6c34d4bffbc3?s=180&d=identicon" width="75"><br />
             Cathy Gay
             </a>
          </td>

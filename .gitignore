@@ -6,4 +6,5 @@ target/
 *.class
 out/
 *.log
+*.log.*
 *.lck

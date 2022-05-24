@@ -9,19 +9,20 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-
         FileHandler fileHandler = initializeFileHandler("Server");
-        Logger serverLogger = initializeLogger("ServerLogger", fileHandler);
-
-        Server.logger = serverLogger;
+        Server.logger = initializeLogger("ServerLogger", fileHandler);
 
         int port = 50000;
 
         if (args.length > 0) {
-            int userPort = Integer.parseInt(args[0]);
+            try {
+                int userPort = Integer.parseInt(args[0]);
 
-            if (userPort >= 49152 && userPort <= 65535) {
-                port = userPort;
+                if (userPort >= 49152 && userPort <= 65535) {
+                    port = userPort;
+                }
+            } catch (NumberFormatException numberFormatException) {
+                Server.logger.severe("Port given by user (\"" + args[0] + "\") could not be parsed as Int (" + numberFormatException.getMessage() + ")");
             }
         }
 

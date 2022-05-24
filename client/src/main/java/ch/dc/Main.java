@@ -8,17 +8,14 @@ import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
-
         FileHandler fileHandler = initializeFileHandler("Client");
 
-        Logger clientLogger = initializeLogger("ClientLogger", fileHandler);
-        Logger httpServerLogger = initializeLogger("HttpServerLogger", fileHandler);
+        Client.logger = initializeLogger("ClientLogger", fileHandler);
+        ClientHttpServer.logger = initializeLogger("HttpServerLogger", fileHandler);
 
-        ClientHttpServer.logger = httpServerLogger;
         ClientHttpServer clientHttpServer = new ClientHttpServer();
         clientHttpServer.start();
 
-        Client.logger = clientLogger;
         Client.clientHttpServer = clientHttpServer;
 
         Client.main(args);

@@ -15,18 +15,15 @@
 </div>
 <br>
 
-
 The VSFlix project's goal is to be able to make one or multiple clients communicate with a single one server in order to retrieve files shared by the clients.
-
-The technology used for this project rely entirely on Java (JavaFX application for the GUI and Java-based server and Http Server).
-
 
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Authors](#authors)
+2. [Technologies](#technologies)
 3. [Guides and resources](#guides-and-resources)
-4. [License](#license)
+4. [Authors](#authors)
+5. [License](#license)
 
 ## <a name="getting-started"></a>Getting Started
 
@@ -38,7 +35,14 @@ You will need to follow the steps below in order to launch the project.
 2. Launch the VSFlix server by double-clicking on the server jar.
 3. Launch the VSFlix client application by double-clicking on the client jar.
 
-Once these three steps have been executed, you will be able to use the VSFlix client to stream (bidirectionnal stream) files from / to the other connected clients.
+Once these three steps have been executed, you will be able to use the VSFlix client to stream (bidirectionnal stream) files from / to the other connected clients !
+
+## <a name="technologies"></a>Technologies
+
+This project relies entirely on Java :
+
+- The client application has been made with JavaFX
+- The server and its internal HTTP server have been developed in pure Java
 
 ### Under the hood
 
@@ -55,6 +59,12 @@ Possible commands :
 | UNSHAREFILE <FileEntry> | Send a FileEntry object for the server to remove it from its shared files. |
 | GETNBCONNECTEDCLIENTS | Request the number of connected clients. |
 | DISCONNECT | Send a request to end the connection. It must be noted that the client does not wait on the server to close its own connection. |
+
+## <a name="guides-and-resources"></a>Guides and resources
+
+* [JavaFX](https://openjfx.io/) - JavaFX
+* [FontAwesome](https://fontawesome.com/) - FontAwesome 5 Icons
+* [Maven](https://maven.apache.org/) - Dependency Management
 
 ## <a name="authors"></a>Authors
 
@@ -76,13 +86,6 @@ Possible commands :
       </tr>
    </tbody>
 </table>
-
-## <a name="guides-and-resources"></a>Guides and resources
-
-* [JavaFX](https://openjfx.io/) - JavaFX
-* [FontAwesome](https://fontawesome.com/) - FontAwesome 5 Icons
-* [Maven](https://maven.apache.org/) - Dependency Management
-
 
 ## <a name="license"></a>License
 

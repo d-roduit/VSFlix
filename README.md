@@ -29,18 +29,49 @@ The VSFlix project's goal is to be able to make one or multiple clients communic
 
 ### Running the server and the client application
 
-Follow the steps below in order to run the project :
+There are two ways to run the project:
 
-1. Download the project files to your computer and open the project in your favorite IDE (Eclipse, IntelliJ IDEA, etc.)
-2. Download the project dependencies with Maven. _(This step is often proposed or performed automatically by the IDE)_
-3. Run the server. The starting class for the server is `ch.dc.Main` in the server folder.
+1. **Run the server and client JARs:** The first and fastest way is to simply download the server and client JARs from the [releases section](https://github.com/d-roduit/VSFlix/releases) and run them with the commands `java -jar server.jar` and `java -jar client.jar`.
+2. **Run the project with your editor:**
+    1. Download the project files to your computer and open the project in your favorite IDE (Eclipse, IntelliJ IDEA, etc.).
+    2. Download the project dependencies with Maven. _(This step is often proposed or performed automatically by the IDE)_
+    3. Run the server. The starting class for the server is `ch.dc.Main` in the server folder.
     
-    _N. B. : The server listens any incoming connection on ip address `0.0.0.0` and uses by default port `50000`. 
-If this port is already used by another process, you can change it directly in the starting class or by passing the port number as an argument when running the program._
+        _N. B. : The server listens any incoming connection on ip address `0.0.0.0` and uses by default port `50000`. If this port is already used by another process, you can change it directly in the starting class or by passing the port number as an argument when running the program._
 
-4. Run one (or more) client(s). The starting class for the client application is `ch.dc.Main` in the client folder.
+    4. Run one (or more) client(s). The starting class for the client application is `ch.dc.Main` in the client folder.
 
-Once these 4 steps have been executed, you will be able to use the VSFlix client to stream (bidirectionnal stream) files from / to the other connected clients !
+Once you successfully ran the server and the client, you will be able to use the VSFlix client to stream (bidirectionnal stream) files from / to the other connected clients !
+
+### Creating the JARs
+
+#### In IntelliJ
+
+In IntelliJ, you create JARs by creating what they call artifacts:
+
+- Open `Project Structure` and go to `Artifacts`.
+- Click on the `+` sign, then `JAR` > `From modules with dependencies`, then fill in the fields:
+    - Select the module you want to create the JAR for and its main class
+    - For `JAR files from libraries`, select `extract to the target JAR`.
+    - For `Directory for META-INF/MANIFEST.MF`, the client and server JARs have differents paths:
+        - For the client JAR, the path will automatically point to the resources folder (`[...]\src\main\resources`). If it is not, you can set it to point to the resources folder.
+        - For the server JAR, the path will automatically point to the java source folder (`[...]\src\main\java`). Change it to point to the src folder (`[...]\src`).
+- Click "OK" to finish the artifact configuration.
+- In the menu bar, click `Build` > `Build artifacts...` > `All Artifacts` > `Build`.
+
+Once you have done these steps, both the server and client JARs will have been created in the `out\artifacts` folder at root of the project !
+
+#### In Eclipse
+
+- In the Project Exporer, right click on the module you want to export, then select `Export`.
+- In the export window, select `Java` > `Runnable JAR file`, then click "Next".
+- In the Runnable JAR file Specification window, fill in the fields:
+    - For `Launch configuration`, select the correct configuration (the dropdown list will be empty if you have never run the client module via the editor yet).
+    - For `Export destination`, fill in the path of the to-be-created JAR (e.g. `[...]\Desktop\client.jar`). The path must end with a filename !
+    - For `Library handling`, select `Extract required libraries into generated JAR`.
+- Click "Finish".
+
+Once you have done these steps, the JAR will have been created in the selected location !
 
 ## <a name="technologies"></a>Technologies
 

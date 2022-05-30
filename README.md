@@ -63,6 +63,10 @@ Once you have done these steps, both the server and client JARs will have been c
 
 #### In Eclipse
 
+Before creating the JARs, make sure the build path of each module is correctly set up. See these [build path examples screenshots](build_paths_screenshots_for_creating_JARs_with_eclipse/) to see how the build paths should be configured. To configure the build path, right click on the module you want to configure the build path for and select `Build Path` > `Configure Build Path...`, then see the **"source"** tab.
+
+Then, create the JAR with the following steps:
+
 - In the Project Exporer, right click on the module you want to export, then select `Export`.
 - In the export window, select `Java` > `Runnable JAR file`, then click "Next".
 - In the Runnable JAR file Specification window, fill in the fields:
@@ -98,9 +102,9 @@ Possible commands :
 
 ## <a name="guides-and-resources"></a>Guides and resources
 
-* [JavaFX](https://openjfx.io/) - JavaFX
-* [FontAwesome](https://fontawesome.com/) - FontAwesome 5 Icons
-* [Maven](https://maven.apache.org/) - Dependency Management
+* [JavaFX](https://openjfx.io/) - Open source client application platform for desktop, mobile and embedded systems built on Java
+* [FontAwesome](https://fontawesome.com/) - Icons library and toolkit
+* [Maven](https://maven.apache.org/) -  Software project management and comprehension tool
 
 ## <a name="authors"></a>Authors
 
